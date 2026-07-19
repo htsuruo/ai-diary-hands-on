@@ -10,7 +10,8 @@ abstract class ChatMessage with _$ChatMessage {
     required String text,
     required MessageRole role,
     required DateTime timestamp,
-    @Default([]) List<GroundingSource> sources, // ②
+    @Default([]) List<GroundingSource> sources,
+    String? searchSuggestionsHtml,
   }) = _ChatMessage;
 
   const ChatMessage._();

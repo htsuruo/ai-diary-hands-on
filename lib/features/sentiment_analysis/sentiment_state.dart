@@ -8,8 +8,8 @@ part 'sentiment_state.g.dart';
 @freezed
 abstract class SentimentState with _$SentimentState {
   const factory SentimentState({
-    required Sentiment sentiment, // ①
-    required String reason, // ②
+    required Sentiment sentiment,
+    required String reason,
   }) = _SentimentState;
   factory SentimentState.fromJson(Map<String, dynamic> json) =>
       _$SentimentStateFromJson(json);

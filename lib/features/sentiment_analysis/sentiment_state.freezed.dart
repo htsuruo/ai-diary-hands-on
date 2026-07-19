@@ -15,8 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$SentimentState {
 
- Sentiment get sentiment;// ①
- String get reason;
+ Sentiment get sentiment; String get reason;
 /// Create a copy of SentimentState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -215,7 +214,6 @@ class _SentimentState extends SentimentState {
   factory _SentimentState.fromJson(Map<String, dynamic> json) => _$SentimentStateFromJson(json);
 
 @override final  Sentiment sentiment;
-// ①
 @override final  String reason;
 
 /// Create a copy of SentimentState

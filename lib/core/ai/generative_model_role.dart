@@ -10,9 +10,9 @@ enum GenerativeModelRole {
   ),
   ;
 
-  const GenerativeModelRole({required this.systemInstructionFile}); // ④
-  final String systemInstructionFile; // ⑤
+  const GenerativeModelRole({required this.systemInstructionFile});
+  final String systemInstructionFile;
 
-  Future<String> get systemInstruction => // ⑥
+  Future<String> get systemInstruction =>
       rootBundle.loadString(systemInstructionFile);
 }

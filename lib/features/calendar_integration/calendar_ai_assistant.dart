@@ -22,9 +22,9 @@ class CalendarAiAssistant {
         .generativeModel(
           model: 'gemini-3.1-flash-lite',
           tools: [
-            Tool.functionDeclarations([_addEventToCalendarTool]), // ①
+            Tool.functionDeclarations([_addEventToCalendarTool]),
           ],
-          systemInstruction: Content.system(_systemPrompt), // ②
+          systemInstruction: Content.system(_systemPrompt),
         );
     final response = await model.generateContent([
       Content.text(
@@ -32,17 +32,15 @@ class CalendarAiAssistant {
       ),
     ]);
     for (final call in response.functionCalls) {
-      // ①
       switch (call.name) {
         case 'addEventToCalendar':
           final event = CalendarEvent.fromJson(
-            // ②
             call.args['result']! as Map<String, dynamic>,
           );
-          await _ref.read(calendarApiServiceProvider).addEvent(event); // ③
+          await _ref.read(calendarApiServiceProvider).addEvent(event);
           return event;
         default:
-          throw Exception('Unknown function call: ${call.name}'); // ④
+          throw Exception('Unknown function call: ${call.name}');
       }
     }
     return null;
@@ -50,10 +48,9 @@ class CalendarAiAssistant {
 }
 
 final _addEventToCalendarTool = FunctionDeclaration(
-  'addEventToCalendar', // ①
-  '日記の内容からカレンダーに予定を追加する', // ②
+  'addEventToCalendar',
+  '日記の内容からカレンダーに予定を追加する',
   parameters: {
-    // ③
     'result': Schema.object(
       properties: {
         'title': Schema.string(description: '予定のタイトル'),
@@ -61,7 +58,7 @@ final _addEventToCalendarTool = FunctionDeclaration(
         'startTime': Schema.string(description: '開始日時（ISO 8601形式）'),
         'endTime': Schema.string(description: '終了日時（ISO 8601形式）'),
       },
-      optionalProperties: ['endTime'], // ④
+      optionalProperties: ['endTime'],
     ),
   },
 );

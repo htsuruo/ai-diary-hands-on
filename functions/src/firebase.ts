@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase-admin/app";
 import { getFirestore } from "firebase-admin/firestore";
 
-initializeApp(); // ①
+initializeApp();
 
-export const db = getFirestore(); // ②
+export const db = getFirestore();

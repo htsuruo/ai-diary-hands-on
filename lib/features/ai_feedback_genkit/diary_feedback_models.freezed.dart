@@ -278,9 +278,7 @@ as String,
 /// @nodoc
 mixin _$DiaryFeedbackOutput {
 
- String get feedback;// ②
- Sentiment get sentiment;// ③
- bool get isComplete;
+ String get feedback; Sentiment get sentiment; bool get isComplete;
 /// Create a copy of DiaryFeedbackOutput
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -480,9 +478,7 @@ class _DiaryFeedbackOutput implements DiaryFeedbackOutput {
   factory _DiaryFeedbackOutput.fromJson(Map<String, dynamic> json) => _$DiaryFeedbackOutputFromJson(json);
 
 @override final  String feedback;
-// ②
 @override@JsonKey() final  Sentiment sentiment;
-// ③
 @override@JsonKey() final  bool isComplete;
 
 /// Create a copy of DiaryFeedbackOutput

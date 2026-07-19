@@ -8,7 +8,7 @@ import 'google_auth_provider.dart';
 
 part 'calendar_api_service.g.dart';
 
-@Riverpod(keepAlive: true) // ①
+@Riverpod(keepAlive: true)
 CalendarApiService calendarApiService(Ref ref) => CalendarApiService(ref);
 
 class CalendarApiService {
@@ -18,23 +18,20 @@ class CalendarApiService {
   Future<void> addEvent(CalendarEvent event) async {
     final accessToken = await _ref.read(
       googleUserAccessTokenProvider.future,
-    ); // ②
+    );
     if (accessToken == null) {
       return;
     }
     final authorization = GoogleSignInClientAuthorization(
-      // ③
       accessToken: accessToken,
     );
     final client = authorization.authClient(
       scopes: [
-        // ④
         CalendarApi.calendarEventsOwnedScope,
       ],
     );
-    final calendarApi = CalendarApi(client); // ⑤
+    final calendarApi = CalendarApi(client);
     await calendarApi.events.insert(
-      // ⑥
       Event(
         summary: event.title,
         description: event.description,

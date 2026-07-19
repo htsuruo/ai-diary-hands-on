@@ -1,8 +1,8 @@
 import { FieldValue } from "firebase-admin/firestore";
-import { z } from "genkit"; // ①
+import { z } from "genkit";
 import { Document } from "genkit/retriever";
 import { db } from "../firebase";
-import { ai } from "../genkit"; // ②
+import { ai } from "../genkit";
 import { documentEmbedder, formatDocumentForEmbedding } from "./embedder";
 import { loadSampleDiaries } from "./sample-diaries";
 
@@ -12,11 +12,11 @@ type IndexerMetadata = {
 };
 
 export const diaryIndexer = ai.defineIndexer(
-  // ③
+
   {
     name: "diaryIndexer",
     configSchema: z.object({
-      // ④
+
       uid: z.string().describe("ユーザーID"),
     }),
   },
@@ -30,7 +30,7 @@ export const diaryIndexer = ai.defineIndexer(
       const meta = (doc.metadata as IndexerMetadata) ?? {};
 
       const [{ embedding }] = await ai.embed({
-        embedder: documentEmbedder, // ②
+        embedder: documentEmbedder,
         content: formatDocumentForEmbedding({
           title: meta.title,
           content: doc.text,
@@ -38,7 +38,7 @@ export const diaryIndexer = ai.defineIndexer(
       });
 
       batch.set(docRef, {
-        // ③
+
         title: meta.title,
         content: doc.text,
         feedback: null,
@@ -49,7 +49,7 @@ export const diaryIndexer = ai.defineIndexer(
         updatedAt: FieldValue.serverTimestamp(),
       });
     }
-    await batch.commit(); // ④
+    await batch.commit();
   },
 );
 
@@ -75,20 +75,20 @@ export const diaryIndexerFlow = ai.defineFlow(
     if (input.clearAll) {
       await db.recursiveDelete(
         db.collection("users").doc(uid).collection("diaries"),
-      ); // ①
+      );
     }
 
-    const sampleDiaries = loadSampleDiaries(); // ②
+    const sampleDiaries = loadSampleDiaries();
     const documents = sampleDiaries.map((diary) =>
       Document.fromText(diary.content, {
-        // ③
+
         title: diary.title,
         date: diary.date,
       }),
     );
 
     await ai.index({
-      // ④
+
       indexer: diaryIndexer,
       documents,
       options: { uid },

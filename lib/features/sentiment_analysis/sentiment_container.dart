@@ -16,18 +16,16 @@ class SentimentContainer extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final analysisAsync = ref.watch(
-      // ①
       sentimentAnalysisProvider(diary: diary),
     );
 
     final hasNoAnalysis =
         analysisAsync.value == null &&
-        analysisAsync.runtimeType == AsyncData<SentimentState?>; // ②
+        analysisAsync.runtimeType == AsyncData<SentimentState?>;
 
     return hasNoAnalysis
         ? const SizedBox.shrink()
         : switch (analysisAsync) {
-            // ③
             AsyncData(:final value) =>
               value == null
                   ? const SizedBox.shrink()

@@ -37,8 +37,8 @@ export const writeDiaryFlow = ai.defineFlow(
     const draft = await draftPrompt(
       { memo },
       {
-        use: [skills({ skillPaths: SKILL_PATHS })], // ①
-        context: { uid }, // ②
+        use: [skills({ skillPaths: SKILL_PATHS })],
+        context: { uid },
         maxTurns: 6,
       },
     );
@@ -49,12 +49,12 @@ export const writeDiaryFlow = ai.defineFlow(
       { use: [skills({ skillPaths: SKILL_PATHS })], maxTurns: 4 },
     );
     for await (const chunk of stream) {
-      sendChunk(chunk.text); // ③
+      sendChunk(chunk.text);
     }
     const refined = await response;
 
     // Step 3: メタデータ抽出（モデル選択）
-    const meta = await metaPrompt({ diary: refined.text }); // ④
+    const meta = await metaPrompt({ diary: refined.text });
 
     return {
       diary: refined.text,

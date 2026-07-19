@@ -15,7 +15,6 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CalendarEvent {
 
-// ①
  String get title; String get description; DateTime get startTime; DateTime? get endTime;
 /// Create a copy of CalendarEvent
 /// with the given fields replaced by the non-null parameter values.
@@ -216,7 +215,6 @@ class _CalendarEvent extends CalendarEvent {
   const _CalendarEvent({required this.title, required this.description, required this.startTime, this.endTime}): super._();
   factory _CalendarEvent.fromJson(Map<String, dynamic> json) => _$CalendarEventFromJson(json);
 
-// ①
 @override final  String title;
 @override final  String description;
 @override final  DateTime startTime;

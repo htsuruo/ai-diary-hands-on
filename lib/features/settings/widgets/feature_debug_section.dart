@@ -32,7 +32,6 @@ class FeatureDebugSection extends ConsumerWidget {
                 .read(calendarAiAssistantProvider)
                 .createEventIfNeeded(content: content);
             await showOkAlertDialog(
-              // ②
               context: context,
               title: '結果',
               message: event != null

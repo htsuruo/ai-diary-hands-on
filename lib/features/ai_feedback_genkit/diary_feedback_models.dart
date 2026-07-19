@@ -7,7 +7,7 @@ part 'diary_feedback_models.g.dart';
 @freezed
 abstract class DiaryFeedbackInput with _$DiaryFeedbackInput {
   const factory DiaryFeedbackInput({
-    required String content, // ①
+    required String content,
   }) = _DiaryFeedbackInput;
 
   factory DiaryFeedbackInput.fromJson(Map<String, dynamic> json) =>
@@ -17,9 +17,9 @@ abstract class DiaryFeedbackInput with _$DiaryFeedbackInput {
 @freezed
 abstract class DiaryFeedbackOutput with _$DiaryFeedbackOutput {
   const factory DiaryFeedbackOutput({
-    required String feedback, // ②
-    @Default(Sentiment.neutral) Sentiment sentiment, // ③
-    @Default(false) bool isComplete, // ④
+    required String feedback,
+    @Default(Sentiment.neutral) Sentiment sentiment,
+    @Default(false) bool isComplete,
   }) = _DiaryFeedbackOutput;
 
   factory DiaryFeedbackOutput.fromJson(Map<String, dynamic> json) =>

@@ -16,7 +16,7 @@ class FeedbackResultWidget extends ConsumerWidget {
     final output = ref.watch(diaryFeedbackServiceProvider(diary));
 
     if (output == null) {
-      return const SizedBox.shrink(); // ①
+      return const SizedBox.shrink();
     }
 
     final sentiment = output.sentiment;
@@ -25,7 +25,7 @@ class FeedbackResultWidget extends ConsumerWidget {
       margin: const .only(top: 8),
       padding: const .all(12),
       decoration: BoxDecoration(
-        color: sentiment.backgroundColor, // ②
+        color: sentiment.backgroundColor,
         borderRadius: .circular(8),
       ),
       child: Column(
@@ -59,7 +59,7 @@ class FeedbackResultWidget extends ConsumerWidget {
                 const SizedBox.square(
                   dimension: 16,
                   child: CircularProgressIndicator(strokeWidth: 2),
-                ), // ③
+                ),
             ],
           ),
           const Gap(8),
@@ -68,7 +68,7 @@ class FeedbackResultWidget extends ConsumerWidget {
             style: Theme.of(context).textTheme.labelMedium,
           ),
           const Gap(4),
-          Text(output.feedback), // ④
+          Text(output.feedback),
         ],
       ),
     );

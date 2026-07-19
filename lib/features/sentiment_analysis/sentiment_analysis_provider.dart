@@ -32,32 +32,30 @@ class SentimentAnalysis extends _$SentimentAnalysis {
           ),
         ],
         generationConfig: GenerationConfig(
-          // ①
-          responseMimeType: 'application/json', // ②
+          responseMimeType: 'application/json',
           responseSchema: Schema.object(
-            // ③
             properties: {
               'sentiment': Schema.enumString(
                 description: 'センチメント分析の結果',
-                enumValues: Sentiment.values.map((e) => e.name).toList(), // ④
+                enumValues: Sentiment.values.map((e) => e.name).toList(),
               ),
               'reason': Schema.string(
                 description: '分析結果の理由を簡潔に記載する',
               ),
             },
-            nullable: false, // ⑤
+            nullable: false,
           ),
         ),
       );
-      final json = jsonDecode(response.text!) as Map<String, dynamic>; // ①
+      final json = jsonDecode(response.text!) as Map<String, dynamic>;
       return SentimentState.fromJson(json);
     });
 
     if (!state.hasError) {
       final diary = this.diary.copyWith(
-        sentimentAnalysis: state.value, // ①
+        sentimentAnalysis: state.value,
       );
-      await ref.read(diaryRepositoryProvider.notifier).updateEntry(diary); // ②
+      await ref.read(diaryRepositoryProvider.notifier).updateEntry(diary);
     }
   }
 }

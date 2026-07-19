@@ -5,12 +5,12 @@ import { sentimentSchema } from "../types"; // インポートを追加
 
 const analyzeSentimentPrompt = ai.prompt("diary-feedback/analyze-sentiment");
 
-// ②
+
 const inputSchema = z.object({
   content: z.string().describe("日記の内容"),
 });
 
-// ③
+
 const outputSchema = z.object({
   sentiment: sentimentSchema.describe("センチメント分析結果"),
 });
@@ -27,14 +27,14 @@ export const analyzeSentimentFlow = ai.defineFlow(
     //   system: `あなたは優秀な感情分析アシスタントです。与えられた日記の内容に基づいて、その感情がpositive・neutral・negativeのいずれかであると判断してください。`,
     //   prompt: `内容:\n${input.content}`,
     //   output: {
-    //     // ④
+
     //     schema: z.object({
     //       sentiment: sentimentSchema,
     //     }),
     //   },
     // });
 
-    const response = await analyzeSentimentPrompt({ content: input.content }); // ②
+    const response = await analyzeSentimentPrompt({ content: input.content });
 
     if (!response.output) {
       throw new Error("AI response has no output");

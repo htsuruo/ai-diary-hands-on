@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'ai_logic_minimal.dart'; // ①
+import 'ai_logic_minimal.dart';
 
 class AiLogicTutorialApp extends StatefulWidget {
   const AiLogicTutorialApp({super.key});
@@ -15,7 +15,7 @@ class _AiLogicTutorialAppState extends State<AiLogicTutorialApp> {
   @override
   void initState() {
     super.initState();
-    _future = generateText(); // ②
+    _future = generateText();
   }
 
   @override
@@ -27,7 +27,7 @@ class _AiLogicTutorialAppState extends State<AiLogicTutorialApp> {
           title: const Text('Firebase AI Logic Example'),
         ),
         body: FutureBuilder<String?>(
-          future: _future, // ③
+          future: _future,
           builder: (_, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
@@ -37,12 +37,12 @@ class _AiLogicTutorialAppState extends State<AiLogicTutorialApp> {
             if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             }
-            final text = snapshot.data ?? ''; // ④
+            final text = snapshot.data ?? '';
             return SingleChildScrollView(
               padding: const EdgeInsets.all(16),
               child: Text(
                 text,
-                locale: const Locale('ja'), // ⑤
+                locale: const Locale('ja'),
               ),
             );
           },
