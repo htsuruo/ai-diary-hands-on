@@ -4,6 +4,17 @@ AI日記アプリのハンズオンプロジェクト
 
 <img src="./assets/images/logo/symbol_with_box.png" alt="Symbol Icon" width="70%">
 
+## ハンズオンの開始方法
+
+[chapter-04-start](https://github.com/htsuruo/ai-diary-hands-on/tree/chapter-04-start) タグからリポジトリをクローンし、作業用ブランチを作成します。
+
+```bash
+git clone --branch chapter-04-start \
+  https://github.com/htsuruo/ai-diary-hands-on.git
+cd ai-diary-hands-on
+git switch -c ai-diary-work
+```
+
 ## セットアップ
 
 ### Firebase設定

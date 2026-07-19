@@ -10,7 +10,6 @@ dependencies:
   adaptive_dialog: ^2.8.0
   cloud_firestore: ^6.6.0
   cloud_functions: ^6.3.5
-  collection: ^1.19.1
   extension_google_sign_in_as_googleapis_auth: ^3.0.0
   firebase_ai: ^3.13.1
   firebase_app_check: ^0.4.5
@@ -22,8 +21,6 @@ dependencies:
     sdk: flutter
   flutter_markdown_plus: ^1.0.11
   flutter_riverpod: ^3.0.3
-  flutter_web_plugins:
-    sdk: flutter
   flutter_widget_from_html: ^0.17.2
   freezed_annotation: ^3.1.0
   gap: ^3.0.1
