@@ -1,3 +1,5 @@
+// ignore_for_file: unused_element
+
 import 'package:ai_diary_hands_on/features/diary/diary.dart';
 import 'package:ai_diary_hands_on/features/llm_ops/remote_config_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
