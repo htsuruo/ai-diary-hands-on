@@ -1,0 +1,15 @@
+---
+input:
+  schema:
+    content: string
+output:
+  schema:
+    # sentiment(enum: ["positive", "neutral", "negative"]) # ①
+    sentiment: SentimentSchema
+---
+{{role "system"}}
+あなたは優秀な感情分析アシスタントです。与えられた日記の内容に基づいて、その感情がpositive・neutral・negativeのいずれかであると判断してください。
+
+{{role "user"}}
+内容:
+{{content}}

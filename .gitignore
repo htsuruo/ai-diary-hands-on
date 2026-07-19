@@ -1,0 +1,62 @@
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.build/
+.buildlog/
+.history
+.svn/
+.swiftpm/
+migrate_working_dir/
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# The .vscode folder contains launch configuration and tasks you configure in
+# VS Code which you may wish to be included in version control, so this line
+# is commented out by default.
+#.vscode/
+
+# Flutter/Dart/Pub related
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+/build/
+/coverage/
+
+# Symbolication related
+app.*.symbols
+
+# Obfuscation related
+app.*.map.json
+
+# Android Studio will place build artifacts here
+/android/app/debug
+/android/app/profile
+/android/app/release
+
+# FVM Version Cache
+.fvm/
+# Firebase のネイティブ設定は各自 flutterfire configure で生成する（リポジトリでは管理しない）
+# 本物の設定を同梱するとダミーの firebase_options.dart と不整合になり
+# iOS で [core/duplicate-app] を引き起こすため、トラッキングしない
+/ios/Runner/GoogleService-Info.plist
+/android/app/google-services.json
+/ios/firebase_app_id_file.json
+/macos/Runner/GoogleService-Info.plist
+
+# ルート直下のfirebase.jsonはflutterfire configureが生成する実プロジェクトの設定を含むため管理しない
+# （firebase/firebase.json はGenkitバックエンド用の別ファイルで、こちらは引き続き管理する）
+/firebase.json
+/.firebaserc
+
+**/firebase_options.dart

@@ -1,0 +1,20 @@
+targets:
+  $default:
+    builders:
+      # freezed:
+      #   generate_for:
+      #     include:
+      #       - lib/**/*_state.dart
+      #       - lib/entities/**/*.dart
+      json_serializable:
+        options:
+          create_field_map: true
+          create_per_field_to_json: true
+      source_gen|combining_builder:
+        options:
+          ignore_for_file:
+            - "type=lint"
+            - implicit_dynamic_parameter
+            - implicit_dynamic_type
+            - implicit_dynamic_method
+            - strict_raw_type
