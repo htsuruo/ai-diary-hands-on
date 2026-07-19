@@ -53,7 +53,7 @@ final class DiaryFormViewModelProvider
 }
 
 String _$diaryFormViewModelHash() =>
-    r'b91260e4c8ff4506af923cd8652177791d579aa9';
+    r'c2345896acb044c9f90c87287b4a46b0bee36e8a';
 
 final class DiaryFormViewModelFamily extends $Family
     with
