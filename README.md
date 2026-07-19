@@ -18,9 +18,9 @@ dart pub global activate flutterfire_cli
 flutterfire configure
 ```
 
-`flutterfire configure` を実行すると、`lib/firebase_options.dart` に実際のFirebase設定値が書き込まれます。
+`flutterfire configure` を実行すると、`lib/firebase_options.dart` が生成されます。
 
-**注意**: `firebase_options.dart` はダミーデータでコミットされています。`flutterfire configure` 実行後の変更はコミットしないでください。
+**注意**: `firebase_options.dart` は `.gitignore` 対象のためリポジトリには含まれていません。各自の Firebase プロジェクトで `flutterfire configure` を実行して生成してください。
 
 #### iOSビルド時の注意点: `xcodeproj` gem
 
@@ -37,35 +37,6 @@ gem install --user-install xcodeproj
 ```
 
 この gem は CocoaPods を利用しているかどうかにかかわらず、`GoogleService-Info.plist` をXcodeプロジェクトへ登録する処理で必要になります（下記のSPM移行後も変わりません）。
-
-### Firebase設定ファイルの役割
-
-このリポジトリには `firebase.json` が2つあります。
-どちらも Firebase 関連の設定ファイルですが、用途が異なります。
-
-- `firebase.json`
-  - FlutterFire CLI が生成する Flutter アプリ連携用の設定です。
-  - `flutterfire configure` を実行するときに利用されます。
-- `firebase/firebase.json`
-  - Cloud Functions、Firestore、Emulator 用の Firebase CLI 設定です。
-  - `firebase/` 配下で Functions や Emulator を操作するときに利用されます。
-
-ルート直下の `firebase.json` は Flutter アプリと Firebase プロジェクトの対応関係を管理するためのファイルです。
-基本的には FlutterFire CLI が管理するため、手動で編集する必要はありません。
-
-一方、`firebase/firebase.json` は第9章以降で扱う Genkit バックエンド、
-Cloud Functions、Firestore、Emulator のための設定です。
-Functions のビルド、エミュレータ起動、デプロイなど Firebase CLI を使う作業は、
-基本的に `firebase/` ディレクトリで実行します。
-
-```bash
-# Firebase CLIのインストール（初回のみ）
-npm install -g firebase-tools
-
-cd firebase
-npm --prefix functions install
-firebase emulators:start
-```
 
 ### iOS: Swift Package Manager移行
 
@@ -106,7 +77,6 @@ lib
 │   ├── llm_ops
 │   ├── sentiment_analysis
 │   └── settings
-├── firebase_options.dart
 ├── main.dart
 └── shared
     ├── extensions
@@ -180,7 +150,8 @@ users (collection)
           ├─ {diaryId} (document)
           │   ├─ title: string
           │   ├─ content: string
-          │   ├─ feedbackText: string
+          │   ├─ date: string
+          │   ├─ feedback: string
           │   ├─ sentimentAnalysis: string
           │   ├─ createdAt: Timestamp
           │   └─ updatedAt: Timestamp
