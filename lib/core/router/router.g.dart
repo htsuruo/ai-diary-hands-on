@@ -19,10 +19,6 @@ RouteBase get $diariesPageRoute => GoRouteData.$route(
       factory: $DiaryCreatePageRoute._fromState,
     ),
     GoRouteData.$route(
-      path: 'diaries/:id/chat',
-      factory: $ChatPageRoute._fromState,
-    ),
-    GoRouteData.$route(
       path: 'diaries/:id',
       factory: $DiaryDetailPageRoute._fromState,
       routes: [
@@ -67,30 +63,6 @@ mixin $DiaryCreatePageRoute on GoRouteData {
 
   @override
   String get location => GoRouteData.$location('/diaries/new');
-
-  @override
-  void go(BuildContext context) => context.go(location);
-
-  @override
-  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
-
-  @override
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
-
-  @override
-  void replace(BuildContext context) => context.replace(location);
-}
-
-mixin $ChatPageRoute on GoRouteData {
-  static ChatPageRoute _fromState(GoRouterState state) =>
-      ChatPageRoute(id: state.pathParameters['id']!);
-
-  ChatPageRoute get _self => this as ChatPageRoute;
-
-  @override
-  String get location =>
-      GoRouteData.$location('/diaries/${Uri.encodeComponent(_self.id)}/chat');
 
   @override
   void go(BuildContext context) => context.go(location);

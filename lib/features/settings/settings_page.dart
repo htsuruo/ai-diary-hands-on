@@ -25,7 +25,6 @@ class SettingsPage extends ConsumerWidget {
             const GoogleSignInSection(),
             if (isAuthenticated) ...[
               const CalendarDebugSection(),
-              const FeatureDebugSection(),
             ],
           ],
         ),

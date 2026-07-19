@@ -9,13 +9,9 @@ environment:
 dependencies:
   adaptive_dialog: ^2.8.0
   cloud_firestore: ^6.6.0
-  cloud_functions: ^6.3.5
   collection: ^1.19.1
   extension_google_sign_in_as_googleapis_auth: ^3.0.0
-  firebase_ai: ^3.13.1
-  firebase_app_check: ^0.4.5
   firebase_core: ^4.11.0
-  firebase_remote_config: ^6.5.3
   flutter:
     sdk: flutter
   flutter_localizations:
@@ -57,7 +53,6 @@ flutter:
   assets:
     - assets/images/logo/
     - assets/images/icon/
-    - assets/prompts/
 
 icons_launcher:
   image_path: "assets/images/icon/app_icon.png"

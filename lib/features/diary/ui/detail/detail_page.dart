@@ -1,7 +1,4 @@
-import 'package:ai_diary_hands_on/features/ai_feedback/ai_feedback_container.dart';
-import 'package:ai_diary_hands_on/features/ai_feedback_genkit/feedback_result_widget.dart';
 import 'package:ai_diary_hands_on/features/diary/ui/edit/widgets/empty_screen.dart';
-import 'package:ai_diary_hands_on/features/sentiment_analysis/sentiment_container.dart';
 import 'package:ai_diary_hands_on/shared/shared.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -76,10 +73,6 @@ class _Body extends StatelessWidget {
                 updatedAt: diary.updatedAt.dateOrNow,
               ),
             ),
-            SentimentContainer(diary: diary),
-            AiFeedbackContainer(diary: diary),
-            FeedbackResultWidget(diary: diary),
-            const Gap(8),
             // 本文
             Text(
               diary.content,

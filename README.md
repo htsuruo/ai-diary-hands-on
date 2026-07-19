@@ -56,26 +56,19 @@ CocoaPods（`pod`コマンド）のインストールは不要です。
 
 ## プロジェクト構成
 
-本アプリは 機能（feature-first）ごとにディレクトリを分けて構成しています。`lib/features/` の下に、機能ごとのディレクトリ（`ai_feedback`など）を作成します。
+本アプリは機能（feature-first）ごとにディレクトリを分けて構成しています。ハンズオンでは、章を進めながら `lib/features/` の下へAI機能を追加します。
 
 ```bash
 lib
 ├── app.dart
 ├── core
-│   ├── ai
 │   ├── core.dart
 │   ├── router
 │   ├── theme
 │   └── utils
-├── examples
 ├── features
-│   ├── ai_feedback
-│   ├── ai_feedback_genkit
 │   ├── calendar_integration
-│   ├── chat
 │   ├── diary
-│   ├── llm_ops
-│   ├── sentiment_analysis
 │   └── settings
 ├── main.dart
 └── shared
@@ -84,7 +77,7 @@ lib
     └── widgets
 ```
 
-本レポジトリはハンズオン前提での利用のため、ユーザー認証などは実装せず必要最小限の機能をシンプルに実装することを優先しています。
+第4章の開始時点では、日記のCRUDと、後続章で利用するGoogleサインインの基盤を実装済みです。AI機能は各章のハンズオンで追加します。
 
 ### ディレクトリの役割
 
@@ -101,6 +94,8 @@ lib
 ```bash
 features/
 ├── diary/              # 基本日記機能
+├── calendar_integration/ # Googleサインイン基盤、第6章でカレンダー連携を追加
+├── settings/           # Googleサインインの確認画面
 ├── ai_feedback/        # 第5章: AI フィードバック
 ├── chat/               # 第5章: AI チャット
 ├── sentiment_analysis/ # 第6章: センチメント分析
@@ -151,8 +146,6 @@ users (collection)
           │   ├─ title: string
           │   ├─ content: string
           │   ├─ date: string
-          │   ├─ feedback: string
-          │   ├─ sentimentAnalysis: string
           │   ├─ createdAt: Timestamp
           │   └─ updatedAt: Timestamp
           ├─ {diaryId} (document)

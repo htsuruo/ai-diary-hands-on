@@ -1,6 +1,5 @@
 import 'package:ai_diary_hands_on/core/core.dart';
 import 'package:ai_diary_hands_on/features/diary/diary.dart';
-import 'package:ai_diary_hands_on/features/sentiment_analysis/sentiment_ui_extension.dart';
 import 'package:ai_diary_hands_on/shared/shared.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -19,8 +18,6 @@ class DiaryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-
-    final analysis = diary.sentimentAnalysis;
 
     return Card(
       margin: const .only(bottom: 16),
@@ -77,14 +74,6 @@ class DiaryCard extends StatelessWidget {
                       DateTime.parse(diary.date).formattedDate,
                       style: theme.textTheme.labelMedium,
                     ),
-                    const Spacer(),
-                    if (analysis != null) ...[
-                      Icon(
-                        analysis.sentiment.icon,
-                        color: analysis.sentiment.color,
-                      ),
-                      const Gap(8),
-                    ],
                   ],
                 ),
               ),
