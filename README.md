@@ -68,6 +68,7 @@ lib
 │   └── utils
 ├── features
 │   ├── calendar_integration
+│   ├── chat
 │   ├── diary
 │   └── settings
 ├── main.dart
@@ -95,6 +96,7 @@ lib
 features/
 ├── diary/              # 基本日記機能
 ├── calendar_integration/ # Googleサインイン基盤、第6章でカレンダー連携を追加
+├── chat/               # 第5章で拡張するチャット画面の雛形
 ├── settings/           # Googleサインインの確認画面
 ├── ai_feedback/        # 第5章: AI フィードバック
 ├── chat/               # 第5章: AI チャット
