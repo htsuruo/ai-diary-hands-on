@@ -24,17 +24,17 @@ const outputSchema = z.object({
 
 function buildContext(sources: DiarySource[]): string {
   if (sources.length === 0) {
-    // ①
+
     return "関連する日記は見つかりませんでした。";
   }
 
   const contextParts = sources.map((source, index) => {
-    // ②
+
     const date = source.date.slice(0, 10); // ISO 8601 → YYYY-MM-DD
     return `[${index + 1}] ${date}: ${source.content}`;
   });
 
-  return contextParts.join("\n\n"); // ③
+  return contextParts.join("\n\n");
 }
 
 export const memoryAssistantFlow = ai.defineFlow(
@@ -46,7 +46,7 @@ export const memoryAssistantFlow = ai.defineFlow(
   async (input, { context }) => {
     const uid = requireAuth(context);
     const { query } = input;
-    const documents = await diaryRetrieverFlow({ uid, query }); // ①
+    const documents = await diaryRetrieverFlow({ uid, query });
 
     const sources: DiarySource[] = documents.map((doc) => ({
       date: doc.date,
@@ -54,17 +54,17 @@ export const memoryAssistantFlow = ai.defineFlow(
       content: doc.content,
     }));
 
-    const additionalContext = buildContext(sources); // ②
+    const additionalContext = buildContext(sources);
 
     const response = await prompt({
-      // ③
+
       query,
       context: additionalContext,
     });
 
     // LLMが引用した番号に基づいてフィルタリング
     const citedIndices: number[] = response.output?.citedIndices ?? [];
-    const citedSources = filterCitedSources(sources, citedIndices); // ④
+    const citedSources = filterCitedSources(sources, citedIndices);
 
     return {
       answer: response.output?.answer ?? "回答を生成できませんでした。",
@@ -78,15 +78,15 @@ function filterCitedSources(
   sources: DiarySource[],
   citedIndices: number[],
 ): DiarySource[] {
-  const citedSourceIndices = new Set(citedIndices); // ①
-  return sources.filter((_, index) => citedSourceIndices.has(index + 1)); // ②
+  const citedSourceIndices = new Set(citedIndices);
+  return sources.filter((_, index) => citedSourceIndices.has(index + 1));
 }
 
 export function requireAuth(context: ActionContext | undefined): string {
-  const auth = context?.auth; // ①
+  const auth = context?.auth;
   if (!auth) {
-    // ②
+
     throw new UserFacingError("UNAUTHENTICATED", "認証が必要です");
   }
-  return auth.uid; // ③
+  return auth.uid;
 }

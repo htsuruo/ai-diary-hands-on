@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:gap/gap.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -16,22 +17,19 @@ class ChatMessageBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isUser = message.role.isUser; // ①
+    final isUser = message.role.isUser;
     final text = message.text;
 
     return Padding(
       padding: const .only(bottom: 12),
       child: Row(
         crossAxisAlignment: .start,
-        mainAxisAlignment:
-            isUser // ②
-            ? .end
-            : .start,
+        mainAxisAlignment: isUser ? .end : .start,
         children: [
           Flexible(
             child: isUser
-                ? _UserMessageWidget(text: text) // ③
-                : _ModelMessageWidget(message: message), // ④
+                ? _UserMessageWidget(text: text)
+                : _ModelMessageWidget(message: message),
           ),
         ],
       ),
@@ -50,7 +48,7 @@ class _UserMessageWidget extends StatelessWidget {
     final colorScheme = theme.colorScheme;
     final width = MediaQuery.widthOf(context);
     return Container(
-      constraints: BoxConstraints(maxWidth: width * 0.8), // ⑤
+      constraints: BoxConstraints(maxWidth: width * 0.8),
       decoration: BoxDecoration(
         color: colorScheme.surfaceContainer,
         borderRadius: BorderRadius.circular(20).copyWith(
@@ -78,7 +76,7 @@ class _UserMessageWidget extends StatelessWidget {
 //     final width = MediaQuery.widthOf(context);
 
 //     return Container(
-//       constraints: BoxConstraints(maxWidth: width * 0.9), // ⑥
+//       constraints: BoxConstraints(maxWidth: width * 0.9),
 //       decoration: BoxDecoration(
 //         color: colorScheme.primaryContainer.withValues(
 //           alpha: 0.6,
@@ -89,8 +87,8 @@ class _UserMessageWidget extends StatelessWidget {
 //       ),
 //       padding: const EdgeInsets.all(12),
 //       child: MarkdownBody(
-//         data: message.text, // ⑦
-//         selectable: true, // ⑧
+//         data: message.text,
+//         selectable: true,
 //       ),
 //     );
 //   }
@@ -109,7 +107,7 @@ class _ModelMessageWidget extends StatelessWidget {
     final width = MediaQuery.widthOf(context);
 
     return Container(
-      constraints: BoxConstraints(maxWidth: width * 0.9), // ⑥
+      constraints: BoxConstraints(maxWidth: width * 0.9),
       decoration: BoxDecoration(
         color: colorScheme.primaryContainer.withValues(
           alpha: 0.6,
@@ -122,12 +120,16 @@ class _ModelMessageWidget extends StatelessWidget {
       child: Column(
         children: [
           MarkdownBody(
-            data: message.text, // ⑦
-            selectable: true, // ⑧
+            data: message.text,
+            selectable: true,
           ),
+          if (message.searchSuggestionsHtml case final html?) ...[
+            const Gap(8),
+            HtmlWidget(html),
+          ],
           if (message.sources.isNotEmpty) ...[
             const Gap(8),
-            _SourceChips(sources: message.sources), // ⑨
+            _SourceChips(sources: message.sources),
           ],
         ],
       ),
@@ -146,17 +148,14 @@ class _SourceChips extends StatelessWidget {
     final theme = Theme.of(context);
 
     return Wrap(
-      // ①
       spacing: 8,
       children: sources.map((source) {
         return ActionChip(
-          // ②
           label: Text(source.title.isEmpty ? '参照元リンク' : source.title),
           avatar: const Icon(Icons.link, size: 16),
           onPressed: () async {
             final url = Uri.parse(source.uri);
             if (!await launchUrl(url)) {
-              // ③
               throw Exception('Could not launch $url');
             }
           },

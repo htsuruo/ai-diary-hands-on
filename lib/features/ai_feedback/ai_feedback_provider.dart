@@ -21,8 +21,8 @@ class AiFeedback extends _$AiFeedback {
     state = const AsyncValue.loading();
 
     final content = this.diary.content;
-    // final userPrompt = _buildUserPrompt(content); // ①
-    // final systemInstruction = // ①
+    // final userPrompt = _buildUserPrompt(content);
+    // final systemInstruction =
     //     await GenerativeModelRole.aiFeedback.systemInstruction;
 
     // guard を使って非同期処理を実行し、成功/失敗をハンドリング
@@ -30,12 +30,12 @@ class AiFeedback extends _$AiFeedback {
       final templateId = await ref.watch(
         aiFeedbackTemplateIdProvider.future,
       ); //
-      final model = ref.read(firebaseAIProvider).templateGenerativeModel(); // ①
+      final model = ref.read(firebaseAIProvider).templateGenerativeModel();
       final responseStream = model.generateContentStream(
-        // 'diary-feedback-v1-0-0', // ②
+        // 'diary-feedback-v1-0-0',
         templateId,
         inputs: {
-          'content': content, // ③
+          'content': content,
         },
       );
 

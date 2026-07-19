@@ -144,17 +144,15 @@ class _SubmitButton extends ConsumerWidget {
                 .save(newDiary);
 
             if (isNew) {
-              // ①
               final event = await ref
                   .read(calendarAiAssistantProvider)
-                  .createEventIfNeeded(content: content); // ②
+                  .createEventIfNeeded(content: content);
               return event;
             }
             return null;
           });
 
       if (event != null) {
-        // ③
         await showEventCreatedDialog(context: context, event: event);
       }
 

@@ -55,25 +55,25 @@ class Chat extends _$Chat {
 
   // 6.3.5で追記（Grounding）
   Future<void> sendMessage(String text) async {
-    final userMessage = _makeUserMessage(text); // ③
-    _addMessage(message: userMessage, isSending: true); // ④
+    final userMessage = _makeUserMessage(text);
+    _addMessage(message: userMessage, isSending: true);
 
     final groundingSourceChunks = <GroundingSource>{};
+    String? searchSuggestionsHtml;
 
     final stream = state.requireValue.session.sendMessageStream(
-      // ⑤
       Content.text(text),
     );
-    final buffer = StringBuffer(); // ⑥
+    final buffer = StringBuffer();
 
     await for (final chunk in stream) {
-      final metadata = chunk.candidates.first.groundingMetadata; // ②
+      final metadata = chunk.candidates.first.groundingMetadata;
       if (metadata != null) {
+        searchSuggestionsHtml =
+            metadata.searchEntryPoint?.renderedContent ?? searchSuggestionsHtml;
         groundingSourceChunks.addAll(
-          // ③
           metadata.groundingChunks.map(
             (g) => GroundingSource(
-              // ④
               uri: g.web?.uri ?? '',
               title: g.web?.title ?? '',
             ),
@@ -81,7 +81,6 @@ class Chat extends _$Chat {
         );
       }
 
-      // ⑦
       final textChunk = chunk.text;
       if (textChunk == null) {
         continue;
@@ -101,11 +100,15 @@ class Chat extends _$Chat {
     }
 
     // ストリーミング完了後、収集したグラウンディング情報をメッセージに反映
-    if (groundingSourceChunks.isNotEmpty) {
+    if (groundingSourceChunks.isNotEmpty || searchSuggestionsHtml != null) {
       final sources = groundingSourceChunks
           .where((s) => s.uri.isNotEmpty)
           .toList();
-      _updateLastMessage(buffer.toString(), sources: sources);
+      _updateLastMessage(
+        buffer.toString(),
+        sources: sources,
+        searchSuggestionsHtml: searchSuggestionsHtml,
+      );
     }
   }
 
@@ -120,8 +123,11 @@ class Chat extends _$Chat {
   }
 
   // 6.3.5で追記（Grounding）
-  void _updateLastMessage(String text, {List<GroundingSource>? sources}) {
-    // ①
+  void _updateLastMessage(
+    String text, {
+    List<GroundingSource>? sources,
+    String? searchSuggestionsHtml,
+  }) {
     final messages = state.requireValue.messages;
     state = AsyncData(
       state.requireValue.copyWith(
@@ -129,7 +135,9 @@ class Chat extends _$Chat {
           ...messages.sublist(0, messages.length - 1),
           messages.last.copyWith(
             text: text,
-            sources: sources ?? messages.last.sources, // ②
+            sources: sources ?? messages.last.sources,
+            searchSuggestionsHtml:
+                searchSuggestionsHtml ?? messages.last.searchSuggestionsHtml,
           ),
         ],
       ),
@@ -137,31 +145,31 @@ class Chat extends _$Chat {
   }
 
   // Future<void> sendMessage(String text) async {
-  //   final currentState = state.requireValue; // ①
+  //   final currentState = state.requireValue;
 
-  //   final userMessage = _makeUserMessage(text); // ③
+  //   final userMessage = _makeUserMessage(text);
   //   state = AsyncData(
   //     currentState.copyWith(
   //       messages: [...currentState.messages, userMessage],
-  //       isSending: true, // ④
+  //       isSending: true,
   //     ),
   //   );
 
   //   final stream = state.requireValue.session.sendMessageStream(
-  //     // ⑤
+
   //     Content.text(text),
   //   );
-  //   final buffer = StringBuffer(); // ⑥
+  //   final buffer = StringBuffer();
 
   //   await for (final chunk in stream) {
-  //     // ⑦
+
   //     final textChunk = chunk.text;
   //     if (textChunk == null) {
   //       continue;
   //     }
 
   //     if (buffer.isEmpty) {
-  //       // ⑧
+
   //       // 最初のチャンクで新しいメッセージを作成
   //       final newMessage = _makeModelMessage(textChunk);
   //       state = AsyncData(
@@ -173,23 +181,23 @@ class Chat extends _$Chat {
   //     } else {
   //       // 後続のチャンクで最後のメッセージを更新
   //       buffer.write(textChunk);
-  //       _updateLastMessage(buffer.toString()); // ⑨
+  //       _updateLastMessage(buffer.toString());
   //     }
   //   }
 
   //   state = AsyncData(
-  //     state.requireValue.copyWith(isSending: false), // ⑩
+  //     state.requireValue.copyWith(isSending: false),
   //   );
   // }
 
   // void _updateLastMessage(String text) {
-  //   final messages = state.requireValue.messages; // ①
+  //   final messages = state.requireValue.messages;
   //   state = AsyncData(
   //     state.requireValue.copyWith(
   //       messages: [
-  //         // ②
-  //         ...messages.sublist(0, messages.length - 1), // ③
-  //         messages.last.copyWith(text: text), // ④
+
+  //         ...messages.sublist(0, messages.length - 1),
+  //         messages.last.copyWith(text: text),
   //       ],
   //     ),
   //   );

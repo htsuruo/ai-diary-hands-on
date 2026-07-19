@@ -28,7 +28,7 @@ import { memoryAssistantFlow } from "./memory-assistant-rag";
 // functions should each use functions.runWith({ maxInstances: 10 }) instead.
 // In the v1 API, each function can only serve one request per container, so
 // this will be the maximum concurrent request count.
-setGlobalOptions({ maxInstances: 10, region: "asia-northeast1" }); // ①
+setGlobalOptions({ maxInstances: 10, region: "asia-northeast1" });
 
 const geminiApiKey = defineSecret("GEMINI_API_KEY");
 
@@ -41,5 +41,3 @@ export const helloWorld = onRequest((request, response) => {
   logger.info("Hello logs!", { structuredData: true });
   response.send("Hello from Firebase!");
 });
-
-// ②

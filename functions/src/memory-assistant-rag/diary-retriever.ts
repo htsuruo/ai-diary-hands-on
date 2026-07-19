@@ -47,7 +47,7 @@ export const diaryRetrieverFlow = ai.defineFlow(
   },
   async (input) => {
     const documents = await ai.retrieve({
-      // ①
+
       retriever: userDiaryRetriever(input.uid),
       query: formatQueryForEmbedding(input.query),
       options: { limit: 5 },
@@ -56,7 +56,7 @@ export const diaryRetrieverFlow = ai.defineFlow(
     return documents.map((doc) => {
       const meta = doc.metadata as DiarySearchResult;
       return {
-        // ②
+
         content: doc.text,
         documentId: meta.id,
         date: meta.date,

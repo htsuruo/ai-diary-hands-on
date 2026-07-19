@@ -19,7 +19,6 @@ class AiFeedbackGenkitButton extends ConsumerWidget {
       color: colorScheme.tertiary,
       tooltip: '日記を分析してフィードバック',
       action: () async {
-        // ①
         await ref
             .read(diaryFeedbackServiceProvider(diary).notifier)
             .feedbackStream();

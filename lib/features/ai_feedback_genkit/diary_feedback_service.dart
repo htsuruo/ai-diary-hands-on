@@ -7,24 +7,21 @@ import 'diary_feedback_models.dart';
 
 part 'diary_feedback_service.g.dart';
 
-@Riverpod(keepAlive: true) // ①
+@Riverpod(keepAlive: true)
 class DiaryFeedbackService extends _$DiaryFeedbackService {
   @override
-  DiaryFeedbackOutput? build(DiaryEntry diary) => null; // ②
+  DiaryFeedbackOutput? build(DiaryEntry diary) => null;
 
   Future<void> getFeedback() async {
     try {
-      // ③
       final callable = FirebaseFunctions.instanceFor(
         region: 'asia-northeast1',
       ).httpsCallable('diaryFeedback');
 
-      // ④
       final result = await callable.call<Map<String, dynamic>>(
         DiaryFeedbackInput(content: this.diary.content).toJson(),
       );
 
-      // ⑤
       state = DiaryFeedbackOutput.fromJson(result.data);
     } on FirebaseFunctionsException catch (e) {
       // エラーコードとスタックトレースを保持したまま呼び出し元へ伝える
@@ -38,23 +35,20 @@ class DiaryFeedbackService extends _$DiaryFeedbackService {
       region: 'asia-northeast1',
     ).httpsCallable('diaryFeedback');
 
-    // ①
     state = const DiaryFeedbackOutput(feedback: '');
 
     try {
-      // ②
       final stream = callable.stream<String, Map<Object?, Object?>>(
         DiaryFeedbackInput(content: this.diary.content).toJson(),
       );
 
       await for (final response in stream) {
         switch (response) {
-          // ③
           case Chunk(:final partialData):
             state = state!.copyWith(
               feedback: state!.feedback + partialData,
             );
-          // ④
+
           case Result(:final result):
             final json = Map<String, dynamic>.from(result.data);
             state = DiaryFeedbackOutput.fromJson(json).copyWith(

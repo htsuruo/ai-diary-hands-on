@@ -1,15 +1,14 @@
-import 'package:firebase_ai/firebase_ai.dart'; // ①
+import 'package:firebase_ai/firebase_ai.dart';
 
 Future<String?> generateText() async {
   final model = FirebaseAI.googleAI().generativeModel(
-    // ②
     model: 'gemini-3.1-flash-lite',
   );
 
   final prompt = [
-    Content.text('魔法のバックパックについての物語を書いてください。'), // ③
+    Content.text('魔法のバックパックについての物語を書いてください。'),
   ];
 
-  final response = await model.generateContent(prompt); // ④
-  return response.text; // ⑤
+  final response = await model.generateContent(prompt);
+  return response.text;
 }

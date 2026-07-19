@@ -1,22 +1,22 @@
 import { googleAI } from "@genkit-ai/google-genai";
 
-const outputDimensionality = 768; // ①
+const outputDimensionality = 768;
 const embeddingModel = "gemini-embedding-2";
 
 // ドキュメントインデックス用Embedder
 export const documentEmbedder = googleAI.embedder(embeddingModel, {
-  // ②
+
   outputDimensionality,
 });
 
 // 10.5で使用する検索クエリ用Embedder
 export const queryEmbedder = googleAI.embedder(embeddingModel, {
-  // ③
+
   outputDimensionality,
 });
 
 export function formatDocumentForEmbedding({
-  // ④
+
   title,
   content,
 }: {
@@ -27,6 +27,6 @@ export function formatDocumentForEmbedding({
 }
 
 export function formatQueryForEmbedding(query: string): string {
-  // ⑤
+
   return `task: search result | query: ${query}`;
 }

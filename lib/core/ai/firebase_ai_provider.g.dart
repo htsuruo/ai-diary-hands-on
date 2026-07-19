@@ -50,4 +50,4 @@ final class FirebaseAIProvider
   }
 }
 
-String _$firebaseAIHash() => r'5d191be7be758156a45d2303671671eb11deae33';
+String _$firebaseAIHash() => r'3eaba7498a81302367a192b3c0255ed904747e83';

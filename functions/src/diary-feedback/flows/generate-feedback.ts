@@ -46,7 +46,7 @@ export const generateFeedbackFlow = ai.defineFlow(
 
     // ===ストリーミング出力
     // const { stream, response } = ai.generateStream({
-    //   // ④
+
     //   system: systemPrompt,
     //   prompt: `次の日記にフィードバックしてください：\n\n${input.content}`,
     // });
@@ -55,11 +55,11 @@ export const generateFeedbackFlow = ai.defineFlow(
     const { stream, response } = generateFeedbackPrompt.stream(input);
 
     for await (const chunk of stream) {
-      // ⑤
+
       sendChunk(chunk.text);
     }
 
-    const { text: feedback } = await response; // ⑥
+    const { text: feedback } = await response;
     return { feedback };
   },
 );
