@@ -10,6 +10,7 @@ dependencies:
   adaptive_dialog: ^2.8.0
   cloud_firestore: ^6.6.0
   extension_google_sign_in_as_googleapis_auth: ^3.0.0
+  firebase_ai: ^3.14.1
   firebase_core: ^4.11.0
   flutter:
     sdk: flutter
