@@ -49,6 +49,7 @@ flutter:
   assets:
     - assets/images/logo/
     - assets/images/icon/
+    - assets/prompts/
 
 icons_launcher:
   image_path: "assets/images/icon/app_icon.png"
