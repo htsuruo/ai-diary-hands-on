@@ -12,6 +12,7 @@ abstract class DiaryEntry with _$DiaryEntry {
     @JsonKey(includeToJson: false) required String id,
     required String title,
     required String content,
+    @Default('') String feedback,
     required String date,
     @Default(UnionTimestamp.serverTimestamp()) UnionTimestamp createdAt,
     @Default(UnionTimestamp.serverTimestamp()) UnionTimestamp updatedAt,

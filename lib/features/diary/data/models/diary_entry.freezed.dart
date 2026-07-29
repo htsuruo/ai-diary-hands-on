@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$DiaryEntry {
 
-@JsonKey(includeToJson: false) String get id; String get title; String get content; String get date; UnionTimestamp get createdAt; UnionTimestamp get updatedAt;
+@JsonKey(includeToJson: false) String get id; String get title; String get content; String get feedback; String get date; UnionTimestamp get createdAt; UnionTimestamp get updatedAt;
 /// Create a copy of DiaryEntry
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $DiaryEntryCopyWith<DiaryEntry> get copyWith => _$DiaryEntryCopyWithImpl<DiaryEn
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is DiaryEntry&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.content, content) || other.content == content)&&(identical(other.date, date) || other.date == date)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is DiaryEntry&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.content, content) || other.content == content)&&(identical(other.feedback, feedback) || other.feedback == feedback)&&(identical(other.date, date) || other.date == date)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,title,content,date,createdAt,updatedAt);
+int get hashCode => Object.hash(runtimeType,id,title,content,feedback,date,createdAt,updatedAt);
 
 @override
 String toString() {
-  return 'DiaryEntry(id: $id, title: $title, content: $content, date: $date, createdAt: $createdAt, updatedAt: $updatedAt)';
+  return 'DiaryEntry(id: $id, title: $title, content: $content, feedback: $feedback, date: $date, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $DiaryEntryCopyWith<$Res>  {
   factory $DiaryEntryCopyWith(DiaryEntry value, $Res Function(DiaryEntry) _then) = _$DiaryEntryCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(includeToJson: false) String id, String title, String content, String date, UnionTimestamp createdAt, UnionTimestamp updatedAt
+@JsonKey(includeToJson: false) String id, String title, String content, String feedback, String date, UnionTimestamp createdAt, UnionTimestamp updatedAt
 });
 
 
@@ -65,11 +65,12 @@ class _$DiaryEntryCopyWithImpl<$Res>
 
 /// Create a copy of DiaryEntry
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? content = null,Object? date = null,Object? createdAt = null,Object? updatedAt = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? content = null,Object? feedback = null,Object? date = null,Object? createdAt = null,Object? updatedAt = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
+as String,feedback: null == feedback ? _self.feedback : feedback // ignore: cast_nullable_to_non_nullable
 as String,date: null == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
 as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as UnionTimestamp,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
@@ -176,10 +177,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(includeToJson: false)  String id,  String title,  String content,  String date,  UnionTimestamp createdAt,  UnionTimestamp updatedAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(includeToJson: false)  String id,  String title,  String content,  String feedback,  String date,  UnionTimestamp createdAt,  UnionTimestamp updatedAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _DiaryEntry() when $default != null:
-return $default(_that.id,_that.title,_that.content,_that.date,_that.createdAt,_that.updatedAt);case _:
+return $default(_that.id,_that.title,_that.content,_that.feedback,_that.date,_that.createdAt,_that.updatedAt);case _:
   return orElse();
 
 }
@@ -197,10 +198,10 @@ return $default(_that.id,_that.title,_that.content,_that.date,_that.createdAt,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(includeToJson: false)  String id,  String title,  String content,  String date,  UnionTimestamp createdAt,  UnionTimestamp updatedAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(includeToJson: false)  String id,  String title,  String content,  String feedback,  String date,  UnionTimestamp createdAt,  UnionTimestamp updatedAt)  $default,) {final _that = this;
 switch (_that) {
 case _DiaryEntry():
-return $default(_that.id,_that.title,_that.content,_that.date,_that.createdAt,_that.updatedAt);case _:
+return $default(_that.id,_that.title,_that.content,_that.feedback,_that.date,_that.createdAt,_that.updatedAt);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -217,10 +218,10 @@ return $default(_that.id,_that.title,_that.content,_that.date,_that.createdAt,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(includeToJson: false)  String id,  String title,  String content,  String date,  UnionTimestamp createdAt,  UnionTimestamp updatedAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(includeToJson: false)  String id,  String title,  String content,  String feedback,  String date,  UnionTimestamp createdAt,  UnionTimestamp updatedAt)?  $default,) {final _that = this;
 switch (_that) {
 case _DiaryEntry() when $default != null:
-return $default(_that.id,_that.title,_that.content,_that.date,_that.createdAt,_that.updatedAt);case _:
+return $default(_that.id,_that.title,_that.content,_that.feedback,_that.date,_that.createdAt,_that.updatedAt);case _:
   return null;
 
 }
@@ -232,12 +233,13 @@ return $default(_that.id,_that.title,_that.content,_that.date,_that.createdAt,_t
 
 @allJsonConvertersSerializable
 class _DiaryEntry extends DiaryEntry {
-  const _DiaryEntry({@JsonKey(includeToJson: false) required this.id, required this.title, required this.content, required this.date, this.createdAt = const UnionTimestamp.serverTimestamp(), this.updatedAt = const UnionTimestamp.serverTimestamp()}): super._();
+  const _DiaryEntry({@JsonKey(includeToJson: false) required this.id, required this.title, required this.content, this.feedback = '', required this.date, this.createdAt = const UnionTimestamp.serverTimestamp(), this.updatedAt = const UnionTimestamp.serverTimestamp()}): super._();
   factory _DiaryEntry.fromJson(Map<String, dynamic> json) => _$DiaryEntryFromJson(json);
 
 @override@JsonKey(includeToJson: false) final  String id;
 @override final  String title;
 @override final  String content;
+@override@JsonKey() final  String feedback;
 @override final  String date;
 @override@JsonKey() final  UnionTimestamp createdAt;
 @override@JsonKey() final  UnionTimestamp updatedAt;
@@ -255,16 +257,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DiaryEntry&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.content, content) || other.content == content)&&(identical(other.date, date) || other.date == date)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DiaryEntry&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.content, content) || other.content == content)&&(identical(other.feedback, feedback) || other.feedback == feedback)&&(identical(other.date, date) || other.date == date)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,title,content,date,createdAt,updatedAt);
+int get hashCode => Object.hash(runtimeType,id,title,content,feedback,date,createdAt,updatedAt);
 
 @override
 String toString() {
-  return 'DiaryEntry(id: $id, title: $title, content: $content, date: $date, createdAt: $createdAt, updatedAt: $updatedAt)';
+  return 'DiaryEntry(id: $id, title: $title, content: $content, feedback: $feedback, date: $date, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 
@@ -275,7 +277,7 @@ abstract mixin class _$DiaryEntryCopyWith<$Res> implements $DiaryEntryCopyWith<$
   factory _$DiaryEntryCopyWith(_DiaryEntry value, $Res Function(_DiaryEntry) _then) = __$DiaryEntryCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(includeToJson: false) String id, String title, String content, String date, UnionTimestamp createdAt, UnionTimestamp updatedAt
+@JsonKey(includeToJson: false) String id, String title, String content, String feedback, String date, UnionTimestamp createdAt, UnionTimestamp updatedAt
 });
 
 
@@ -292,11 +294,12 @@ class __$DiaryEntryCopyWithImpl<$Res>
 
 /// Create a copy of DiaryEntry
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = null,Object? content = null,Object? date = null,Object? createdAt = null,Object? updatedAt = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = null,Object? content = null,Object? feedback = null,Object? date = null,Object? createdAt = null,Object? updatedAt = null,}) {
   return _then(_DiaryEntry(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
+as String,feedback: null == feedback ? _self.feedback : feedback // ignore: cast_nullable_to_non_nullable
 as String,date: null == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
 as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as UnionTimestamp,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable

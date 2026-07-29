@@ -1,3 +1,4 @@
+import 'package:ai_diary_hands_on/features/ai_feedback/ai_feedback_container.dart';
 import 'package:ai_diary_hands_on/features/diary/ui/edit/widgets/empty_screen.dart';
 import 'package:ai_diary_hands_on/shared/shared.dart';
 import 'package:flutter/material.dart';
@@ -73,6 +74,7 @@ class _Body extends StatelessWidget {
                 updatedAt: diary.updatedAt.dateOrNow,
               ),
             ),
+            AiFeedbackContainer(diary: diary),
             // 本文
             Text(
               diary.content,
