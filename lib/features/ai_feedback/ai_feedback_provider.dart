@@ -30,10 +30,25 @@ class AiFeedback extends _$AiFeedback {
             model: 'gemini-3.1-flash-lite',
             systemInstruction: Content.system(systemInstruction),
           );
-      final response = await model.generateContent([Content.text(userPrompt)]);
-      final feedback = response.text ?? '';
+      final responseStream = model.generateContentStream([
+        Content.text(userPrompt),
+      ]);
 
-      return this.diary.copyWith(feedback: feedback);
+      var feedback = '';
+
+      await for (final chunk in responseStream) {
+        final textChunk = chunk.text;
+        if (textChunk != null) {
+          feedback += textChunk;
+          state = AsyncValue.data(
+            this.diary.copyWith(feedback: feedback),
+          );
+        }
+      }
+
+      final newDiary = this.diary.copyWith(feedback: feedback);
+
+      return newDiary;
     });
   }
 }
