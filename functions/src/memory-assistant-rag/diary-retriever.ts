@@ -2,8 +2,11 @@ import { defineFirestoreRetriever } from "@genkit-ai/firebase";
 import { z } from "genkit";
 
 import { db } from "../firebase";
-import { queryEmbedder } from "./embedder";
 import { ai } from "../genkit";
+import {
+  formatQueryForEmbedding,
+  queryEmbedder,
+} from "./embedder";
 
 type DiarySearchResult = {
   id: string;
@@ -11,23 +14,20 @@ type DiarySearchResult = {
   distance: number;
 };
 
-function userDiaryRetriever(uid: string) {
-  return defineFirestoreRetriever(ai, {
-    name: "diaryRetriever",
-    firestore: db,
-    collection: `users/${uid}/diaries`,
-    embedder: queryEmbedder,
-    vectorField: "embedding",
-    contentField: "content",
-    distanceMeasure: "COSINE",
-    distanceResultField: "distance",
-    // メタデータとして取得するフィールドを指定
-    metadataFields: ["date", "distance"],
-  });
-}
+const diaryRetriever = defineFirestoreRetriever(ai, {
+  name: "diaryRetriever",
+  firestore: db,
+  embedder: queryEmbedder,
+  vectorField: "embedding",
+  contentField: "content",
+  distanceMeasure: "COSINE",
+  distanceResultField: "distance",
+  // メタデータとして取得するフィールドを指定
+  metadataFields: ["date", "distance"],
+});
 
 const inputSchema = z.object({
-  uid: z.string().describe("ユーザーID"),
+  uid: z.string().describe("ユーザー ID"),
   query: z.string().describe("検索クエリ"),
 });
 
@@ -36,7 +36,7 @@ const outputSchema = z.array(
     content: z.string().describe("日記の内容"),
     documentId: z.string().describe("ドキュメントID"),
     date: z.string().describe("作成日"),
-    distance: z.number().describe("類似度スコア"),
+    distance: z.number().describe("距離値"),
   }),
 );
 
@@ -48,9 +48,12 @@ export const diaryRetrieverFlow = ai.defineFlow(
   },
   async (input) => {
     const documents = await ai.retrieve({
-      retriever: userDiaryRetriever(input.uid),
-      query: input.query,
-      options: { limit: 5 },
+      retriever: diaryRetriever,
+      query: formatQueryForEmbedding(input.query),
+      options: {
+        limit: 5,
+        collection: `users/${input.uid}/diaries`,
+      },
     });
 
     return documents.map((doc) => {
@@ -59,7 +62,7 @@ export const diaryRetrieverFlow = ai.defineFlow(
         content: doc.text,
         documentId: meta.id,
         date: meta.date,
-        distance: meta.distance ?? 0,
+        distance: meta.distance,
       };
     });
   },

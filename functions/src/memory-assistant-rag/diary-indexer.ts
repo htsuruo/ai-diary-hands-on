@@ -3,7 +3,7 @@ import { z } from "genkit";
 import { Document } from "genkit/retriever";
 
 import { db } from "../firebase";
-import { documentEmbedder } from "./embedder";
+import { documentEmbedder, formatDocumentForEmbedding } from "./embedder";
 import { ai } from "../genkit";
 import { loadSampleDiaries } from "./sample-diaries";
 
@@ -29,13 +29,15 @@ export const diaryIndexer = ai.defineIndexer(
 
     for (const doc of docs) {
       const docRef = collectionRef.doc();
+      const meta = (doc.metadata as IndexerMetadata) ?? {};
 
       const [{ embedding }] = await ai.embed({
         embedder: documentEmbedder,
-        content: doc.text,
+        content: formatDocumentForEmbedding({
+          title: meta.title,
+          content: doc.text,
+        }),
       });
-
-      const meta = (doc.metadata as IndexerMetadata) ?? {};
 
       batch.set(docRef, {
         title: meta.title,
