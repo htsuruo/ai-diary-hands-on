@@ -58,5 +58,11 @@ app.*.map.json
 # （firebase/firebase.json はGenkitバックエンド用の別ファイルで、こちらは引き続き管理する）
 /firebase.json
 /.firebaserc
+# firebase/ 配下の .firebaserc も実プロジェクトIDを含むため管理しない
+/firebase/.firebaserc
 
 **/firebase_options.dart
+# firebase init の skills オプションが生成するAIエディタ用ファイル（ローカル利用のみ）
+/.agents/
+/.claude/
+/skills-lock.json

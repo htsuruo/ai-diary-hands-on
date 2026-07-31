@@ -1,0 +1,15 @@
+# Compiled JavaScript files
+lib/**/*.js
+lib/**/*.js.map
+
+# TypeScript v1 declaration files
+typings/
+
+# Node.js dependency directory
+node_modules/
+*.local
+# ローカル環境変数（APIキーを含むためコミット禁止）
+.env*
+
+# Genkit のローカルトレース・ランタイムデータ
+.genkit/
