@@ -54,12 +54,11 @@ app.*.map.json
 /ios/firebase_app_id_file.json
 /macos/Runner/GoogleService-Info.plist
 
-# ルート直下のfirebase.jsonはflutterfire configureが生成する実プロジェクトの設定を含むため管理しない
-# （firebase/firebase.json はGenkitバックエンド用の別ファイルで、こちらは引き続き管理する）
-/firebase.json
+# firebase.json は firestore/functions/emulators の設定を含むため管理する。
+# ただし flutterfire configure が追記する flutter キーは実プロジェクトの設定を
+# 含むため、コミットには含めない（ローカルにのみ保持する）
+# .firebaserc は実プロジェクトIDを含むため管理しない
 /.firebaserc
-# firebase/ 配下の .firebaserc も実プロジェクトIDを含むため管理しない
-/firebase/.firebaserc
 
 **/firebase_options.dart
 # firebase init の skills オプションが生成するAIエディタ用ファイル（ローカル利用のみ）
