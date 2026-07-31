@@ -106,6 +106,11 @@ class Chat extends _$Chat {
           .toList();
       _updateLastMessage(buffer.toString(), sources: sources);
     }
+
+    // テキストチャンクを受信できなかった場合にも送信中の状態を確実に解除する
+    state = AsyncData(
+      state.requireValue.copyWith(isSending: false),
+    );
   }
 
   // メッセージステートの更新
