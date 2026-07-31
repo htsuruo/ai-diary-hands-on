@@ -1,4 +1,5 @@
 import 'package:ai_diary_hands_on/features/diary/diary.dart';
+import 'package:ai_diary_hands_on/features/llm_ops/remote_config_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../core/ai/firebase_ai_provider.dart';
@@ -18,12 +19,15 @@ class AiFeedback extends _$AiFeedback {
     final content = this.diary.content;
 
     state = await AsyncValue.guard(() async {
+      final templateId = await ref.watch(
+        aiFeedbackTemplateIdProvider.future,
+      );
       // サーバープロンプトテンプレートは実験的APIのため警告を抑制
       // ignore: experimental_member_use
       final model = ref.read(firebaseAIProvider).templateGenerativeModel();
       // ignore: experimental_member_use
       final responseStream = model.generateContentStream(
-        'diary-feedback-v1-0-0',
+        templateId,
         inputs: {
           'content': content,
         },
