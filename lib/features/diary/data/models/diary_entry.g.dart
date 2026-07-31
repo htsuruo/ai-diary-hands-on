@@ -13,6 +13,11 @@ _DiaryEntry _$DiaryEntryFromJson(Map<String, dynamic> json) => _DiaryEntry(
   title: json['title'] as String,
   content: json['content'] as String,
   feedback: json['feedback'] as String? ?? '',
+  sentimentAnalysis:
+      _$JsonConverterFromJson<Map<String, dynamic>, SentimentState>(
+        json['sentimentAnalysis'],
+        const SentimentStateConverter().fromJson,
+      ),
   date: json['date'] as String,
   createdAt: json['createdAt'] == null
       ? const UnionTimestamp.serverTimestamp()
@@ -26,6 +31,7 @@ const _$DiaryEntryFieldMap = <String, String>{
   'title': 'title',
   'content': 'content',
   'feedback': 'feedback',
+  'sentimentAnalysis': 'sentimentAnalysis',
   'date': 'date',
   'createdAt': 'createdAt',
   'updatedAt': 'updatedAt',
@@ -35,6 +41,7 @@ abstract final class _$DiaryEntryJsonKeys {
   static const String title = 'title';
   static const String content = 'content';
   static const String feedback = 'feedback';
+  static const String sentimentAnalysis = 'sentimentAnalysis';
   static const String date = 'date';
   static const String createdAt = 'createdAt';
   static const String updatedAt = 'updatedAt';
@@ -48,6 +55,12 @@ abstract class _$DiaryEntryPerFieldToJson {
   static Object? content(String instance) => instance;
   // ignore: unused_element
   static Object? feedback(String instance) => instance;
+  // ignore: unused_element
+  static Object? sentimentAnalysis(SentimentState? instance) =>
+      _$JsonConverterToJson<Map<String, dynamic>, SentimentState>(
+        instance,
+        const SentimentStateConverter().toJson,
+      );
   // ignore: unused_element
   static Object? date(String instance) => instance;
   // ignore: unused_element
@@ -63,7 +76,22 @@ Map<String, dynamic> _$DiaryEntryToJson(_DiaryEntry instance) =>
       'title': instance.title,
       'content': instance.content,
       'feedback': instance.feedback,
+      'sentimentAnalysis':
+          _$JsonConverterToJson<Map<String, dynamic>, SentimentState>(
+            instance.sentimentAnalysis,
+            const SentimentStateConverter().toJson,
+          ),
       'date': instance.date,
       'createdAt': const UnionTimestampConverter().toJson(instance.createdAt),
       'updatedAt': const UnionTimestampConverter().toJson(instance.updatedAt),
     };
+
+Value? _$JsonConverterFromJson<Json, Value>(
+  Object? json,
+  Value? Function(Json json) fromJson,
+) => json == null ? null : fromJson(json as Json);
+
+Json? _$JsonConverterToJson<Json, Value>(
+  Value? value,
+  Json? Function(Value value) toJson,
+) => value == null ? null : toJson(value);
