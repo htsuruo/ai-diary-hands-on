@@ -1,15 +1,14 @@
 {
   "main": "lib/index.js",
   "scripts": {
-    "genkit:watch": "genkit start -o -- tsx --env-file=.env.local --watch",
-    "genkit:start": "npm run genkit:watch -- src/genkit-sample.ts",
+    "genkit:watch": "genkit start -o -- tsx --watch",
     "genkit:feedback": "npm run genkit:watch -- src/diary-feedback",
     "genkit:rag": "npm run genkit:watch -- src/memory-assistant-rag",
     "genkit:writer": "npm run genkit:watch -- src/diary-writer-agent",
     "lint": "eslint --ext .js,.ts .",
     "build": "tsc",
     "build:watch": "tsc --watch",
-    "serve": "npm run build && firebase emulators:start --only functions,firestore --inspect-functions",
+    "serve": "npm run build && firebase emulators:start --only functions --inspect-functions",
     "genkit:emulators": "genkit start -- npm run serve",
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",
