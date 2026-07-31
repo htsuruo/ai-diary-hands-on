@@ -12,6 +12,7 @@ import { onCallGenkit, onRequest } from "firebase-functions/https";
 import * as logger from "firebase-functions/logger";
 import { defineSecret } from "firebase-functions/params";
 import { diaryFeedbackFlow } from "./diary-feedback";
+import { writeDiaryFlow } from "./diary-writer-agent";
 import { memoryAssistantFlow } from "./memory-assistant-rag";
 
 // Start writing functions
@@ -35,6 +36,7 @@ const opts = { secrets: [geminiApiKey] };
 
 export const diaryFeedback = onCallGenkit(opts, diaryFeedbackFlow);
 export const memoryAssistant = onCallGenkit(opts, memoryAssistantFlow);
+export const writeDiary = onCallGenkit(opts, writeDiaryFlow);
 
 export const helloWorld = onRequest((request, response) => {
   logger.info("Hello logs!", { structuredData: true });
