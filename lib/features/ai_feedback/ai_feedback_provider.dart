@@ -56,6 +56,8 @@ class AiFeedback extends _$AiFeedback {
       await ref
           .read(diaryRepositoryProvider.notifier)
           .updateEntry(state.requireValue);
+      // キャッシュを破棄し、チャット画面などが保存済みのフィードバックを参照できるようにする
+      ref.invalidate(diaryProvider(this.diary.id));
     }
   }
 }
