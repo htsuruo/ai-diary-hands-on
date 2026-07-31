@@ -50,6 +50,13 @@ class AiFeedback extends _$AiFeedback {
 
       return newDiary;
     });
+
+    if (!state.hasError) {
+      // Firestoreへ新しいステートの値を保存
+      await ref
+          .read(diaryRepositoryProvider.notifier)
+          .updateEntry(state.requireValue);
+    }
   }
 }
 
