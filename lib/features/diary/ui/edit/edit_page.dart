@@ -1,5 +1,8 @@
 import 'dart:async';
 
+import 'package:ai_diary_hands_on/features/calendar_integration/calendar_ai_assistant.dart';
+import 'package:ai_diary_hands_on/features/calendar_integration/calendar_event.dart';
+import 'package:ai_diary_hands_on/features/calendar_integration/event_created_dialog.dart';
 import 'package:ai_diary_hands_on/features/diary/ui/edit/view_models/diary_form_view_model.dart';
 import 'package:ai_diary_hands_on/features/diary/ui/edit/widgets/empty_screen.dart';
 import 'package:flutter/material.dart';
@@ -132,13 +135,26 @@ class _SubmitButton extends ConsumerWidget {
         date: date,
       );
 
-      await ref
+      final event = await ref
           .read(progressProvider.notifier)
-          .runWithProgress(
-            () => ref
+          .runWithProgress<CalendarEvent?>(() async {
+            // 日記を保存
+            await ref
                 .read(diaryFormViewModelProvider(diary.id).notifier)
-                .save(newDiary),
-          );
+                .save(newDiary);
+
+            if (isNew) {
+              final event = await ref
+                  .read(calendarAiAssistantProvider)
+                  .createEventIfNeeded(content: content);
+              return event;
+            }
+            return null;
+          });
+
+      if (event != null) {
+        await showEventCreatedDialog(context: context, event: event);
+      }
 
       // 保存完了メッセージを表示
       ref
