@@ -31,6 +31,7 @@ module.exports = {
     "indent": ["error", 2],
     // 本書のリスティングのコードスタイルに合わせた調整
     "object-curly-spacing": ["error", "always"],
+    "require-jsdoc": 0,
     "max-len": ["error", {
       "code": 100,
       "ignoreComments": true,
