@@ -1,9 +1,9 @@
 import { z } from "genkit";
 
-import { ai } from "../genkit";
+import { ai } from "../../genkit";
 import { sentimentSchema } from "../types";
 
-const analyzeSentimentPrompt = ai.prompt("analyze-sentiment");
+const analyzeSentimentPrompt = ai.prompt("diary-feedback/analyze-sentiment");
 
 const inputSchema = z.object({
   content: z.string().describe("日記の内容"),

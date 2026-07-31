@@ -1,30 +1,7 @@
-import { defineFirestoreRetriever } from "@genkit-ai/firebase";
 import { z } from "genkit";
 
-import { db } from "../../firebase";
-import { queryEmbedder } from "../../memory-assistant-rag/embedder";
-import { ai } from "../genkit";
-
-type DiarySearchResult = {
-  id: string;
-  date: string;
-  distance: number;
-};
-
-// 第10章と同じ Firestore のベクトルインデックスを参照する Retriever
-function userDiaryRetriever(uid: string) {
-  return defineFirestoreRetriever(ai, {
-    name: "diaryRetriever",
-    firestore: db,
-    collection: `users/${uid}/diaries`,
-    embedder: queryEmbedder,
-    vectorField: "embedding",
-    contentField: "content",
-    distanceMeasure: "COSINE",
-    distanceResultField: "distance",
-    metadataFields: ["date", "distance"],
-  });
-}
+import { ai } from "../../genkit";
+import { diaryRetrieverFlow } from "../../memory-assistant-rag/diary-retriever";
 
 export const recallPastDiaries = ai.defineTool(
   {
@@ -45,20 +22,16 @@ export const recallPastDiaries = ai.defineTool(
     }
 
     try {
-      const documents = await ai.retrieve({
-        retriever: userDiaryRetriever(uid),
+      const documents = await diaryRetrieverFlow({
+        uid,
         query,
-        options: { limit: 5 },
       });
       if (documents.length === 0) {
         return "関連する過去の日記は見つかりませんでした。";
       }
 
       return documents
-        .map((doc) => {
-          const meta = doc.metadata as DiarySearchResult;
-          return `[${meta.date}] ${doc.text}`;
-        })
+        .map((doc) => `【${doc.date}】${doc.content}`)
         .join("\n\n");
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);

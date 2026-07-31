@@ -4,7 +4,7 @@ import { Document } from "genkit/retriever";
 
 import { db } from "../firebase";
 import { documentEmbedder } from "./embedder";
-import { ai } from "./genkit";
+import { ai } from "../genkit";
 import { loadSampleDiaries } from "./sample-diaries";
 
 type IndexerMetadata = {

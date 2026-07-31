@@ -3,7 +3,7 @@ import { z } from "genkit";
 
 import { db } from "../firebase";
 import { queryEmbedder } from "./embedder";
-import { ai } from "./genkit";
+import { ai } from "../genkit";
 
 type DiarySearchResult = {
   id: string;

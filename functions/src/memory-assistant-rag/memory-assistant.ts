@@ -2,9 +2,9 @@ import { z } from "genkit";
 
 import { requireAuth } from "./auth";
 import { diaryRetrieverFlow } from "./diary-retriever";
-import { ai } from "./genkit";
+import { ai } from "../genkit";
 
-const prompt = ai.prompt("memory-assistant");
+const prompt = ai.prompt("memory-assistant-rag/memory-assistant");
 
 const inputSchema = z.object({
   query: z.string().describe("ユーザーの質問"),

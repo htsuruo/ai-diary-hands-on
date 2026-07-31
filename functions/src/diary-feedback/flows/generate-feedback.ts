@@ -1,9 +1,9 @@
 import { z } from "genkit";
 
-import { ai } from "../genkit";
+import { ai } from "../../genkit";
 import { sentimentSchema } from "../types";
 
-const generateFeedbackPrompt = ai.prompt("generate-feedback");
+const generateFeedbackPrompt = ai.prompt("diary-feedback/generate-feedback");
 
 const inputSchema = z.object({
   content: z.string().describe("日記の内容"),
