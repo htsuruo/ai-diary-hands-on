@@ -1,9 +1,11 @@
+import 'package:ai_diary_hands_on/core/router/router.dart';
 import 'package:ai_diary_hands_on/features/diary/diary.dart';
 import 'package:ai_diary_hands_on/shared/shared.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 
+import '../chat/widgets/chat_start_button.dart';
 import 'ai_feedback_provider.dart';
 
 class AiFeedbackContainer extends ConsumerWidget {
@@ -37,6 +39,14 @@ class AiFeedbackContainer extends ConsumerWidget {
                   const _FeedbackHeaderRow(),
                   const Gap(8),
                   Text(value.feedback, style: textTheme),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: ChatStartButton(
+                      onPressed: () {
+                        ChatPageRoute(id: diary.id).push<void>(context);
+                      },
+                    ),
+                  ),
                 ],
               ),
               AsyncLoading() => const _GeneratingIndicator(),

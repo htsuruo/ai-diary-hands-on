@@ -5,6 +5,11 @@ enum GenerativeModelRole {
   aiFeedback(
     systemInstructionFile: 'assets/prompts/ai_feedback_prompt.md',
   ),
+
+  // チャットメンタリングのための指示
+  chat(
+    systemInstructionFile: 'assets/prompts/chat_prompt.md',
+  ),
   ;
 
   const GenerativeModelRole({required this.systemInstructionFile});
