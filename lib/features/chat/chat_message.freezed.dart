@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ChatMessage {
 
- String get text; MessageRole get role; DateTime get timestamp;
+ String get text; MessageRole get role; DateTime get timestamp; List<GroundingSource> get sources;
 /// Create a copy of ChatMessage
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $ChatMessageCopyWith<ChatMessage> get copyWith => _$ChatMessageCopyWithImpl<Chat
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ChatMessage&&(identical(other.text, text) || other.text == text)&&(identical(other.role, role) || other.role == role)&&(identical(other.timestamp, timestamp) || other.timestamp == timestamp));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ChatMessage&&(identical(other.text, text) || other.text == text)&&(identical(other.role, role) || other.role == role)&&(identical(other.timestamp, timestamp) || other.timestamp == timestamp)&&const DeepCollectionEquality().equals(other.sources, sources));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,text,role,timestamp);
+int get hashCode => Object.hash(runtimeType,text,role,timestamp,const DeepCollectionEquality().hash(sources));
 
 @override
 String toString() {
-  return 'ChatMessage(text: $text, role: $role, timestamp: $timestamp)';
+  return 'ChatMessage(text: $text, role: $role, timestamp: $timestamp, sources: $sources)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $ChatMessageCopyWith<$Res>  {
   factory $ChatMessageCopyWith(ChatMessage value, $Res Function(ChatMessage) _then) = _$ChatMessageCopyWithImpl;
 @useResult
 $Res call({
- String text, MessageRole role, DateTime timestamp
+ String text, MessageRole role, DateTime timestamp, List<GroundingSource> sources
 });
 
 
@@ -62,12 +62,13 @@ class _$ChatMessageCopyWithImpl<$Res>
 
 /// Create a copy of ChatMessage
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? text = null,Object? role = null,Object? timestamp = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? text = null,Object? role = null,Object? timestamp = null,Object? sources = null,}) {
   return _then(_self.copyWith(
 text: null == text ? _self.text : text // ignore: cast_nullable_to_non_nullable
 as String,role: null == role ? _self.role : role // ignore: cast_nullable_to_non_nullable
 as MessageRole,timestamp: null == timestamp ? _self.timestamp : timestamp // ignore: cast_nullable_to_non_nullable
-as DateTime,
+as DateTime,sources: null == sources ? _self.sources : sources // ignore: cast_nullable_to_non_nullable
+as List<GroundingSource>,
   ));
 }
 
@@ -152,10 +153,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String text,  MessageRole role,  DateTime timestamp)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String text,  MessageRole role,  DateTime timestamp,  List<GroundingSource> sources)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ChatMessage() when $default != null:
-return $default(_that.text,_that.role,_that.timestamp);case _:
+return $default(_that.text,_that.role,_that.timestamp,_that.sources);case _:
   return orElse();
 
 }
@@ -173,10 +174,10 @@ return $default(_that.text,_that.role,_that.timestamp);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String text,  MessageRole role,  DateTime timestamp)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String text,  MessageRole role,  DateTime timestamp,  List<GroundingSource> sources)  $default,) {final _that = this;
 switch (_that) {
 case _ChatMessage():
-return $default(_that.text,_that.role,_that.timestamp);case _:
+return $default(_that.text,_that.role,_that.timestamp,_that.sources);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -193,10 +194,10 @@ return $default(_that.text,_that.role,_that.timestamp);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String text,  MessageRole role,  DateTime timestamp)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String text,  MessageRole role,  DateTime timestamp,  List<GroundingSource> sources)?  $default,) {final _that = this;
 switch (_that) {
 case _ChatMessage() when $default != null:
-return $default(_that.text,_that.role,_that.timestamp);case _:
+return $default(_that.text,_that.role,_that.timestamp,_that.sources);case _:
   return null;
 
 }
@@ -208,12 +209,19 @@ return $default(_that.text,_that.role,_that.timestamp);case _:
 
 
 class _ChatMessage extends ChatMessage {
-  const _ChatMessage({required this.text, required this.role, required this.timestamp}): super._();
+  const _ChatMessage({required this.text, required this.role, required this.timestamp, final  List<GroundingSource> sources = const []}): _sources = sources,super._();
   
 
 @override final  String text;
 @override final  MessageRole role;
 @override final  DateTime timestamp;
+ final  List<GroundingSource> _sources;
+@override@JsonKey() List<GroundingSource> get sources {
+  if (_sources is EqualUnmodifiableListView) return _sources;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_sources);
+}
+
 
 /// Create a copy of ChatMessage
 /// with the given fields replaced by the non-null parameter values.
@@ -225,16 +233,16 @@ _$ChatMessageCopyWith<_ChatMessage> get copyWith => __$ChatMessageCopyWithImpl<_
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChatMessage&&(identical(other.text, text) || other.text == text)&&(identical(other.role, role) || other.role == role)&&(identical(other.timestamp, timestamp) || other.timestamp == timestamp));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChatMessage&&(identical(other.text, text) || other.text == text)&&(identical(other.role, role) || other.role == role)&&(identical(other.timestamp, timestamp) || other.timestamp == timestamp)&&const DeepCollectionEquality().equals(other._sources, _sources));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,text,role,timestamp);
+int get hashCode => Object.hash(runtimeType,text,role,timestamp,const DeepCollectionEquality().hash(_sources));
 
 @override
 String toString() {
-  return 'ChatMessage(text: $text, role: $role, timestamp: $timestamp)';
+  return 'ChatMessage(text: $text, role: $role, timestamp: $timestamp, sources: $sources)';
 }
 
 
@@ -245,7 +253,7 @@ abstract mixin class _$ChatMessageCopyWith<$Res> implements $ChatMessageCopyWith
   factory _$ChatMessageCopyWith(_ChatMessage value, $Res Function(_ChatMessage) _then) = __$ChatMessageCopyWithImpl;
 @override @useResult
 $Res call({
- String text, MessageRole role, DateTime timestamp
+ String text, MessageRole role, DateTime timestamp, List<GroundingSource> sources
 });
 
 
@@ -262,12 +270,13 @@ class __$ChatMessageCopyWithImpl<$Res>
 
 /// Create a copy of ChatMessage
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? text = null,Object? role = null,Object? timestamp = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? text = null,Object? role = null,Object? timestamp = null,Object? sources = null,}) {
   return _then(_ChatMessage(
 text: null == text ? _self.text : text // ignore: cast_nullable_to_non_nullable
 as String,role: null == role ? _self.role : role // ignore: cast_nullable_to_non_nullable
 as MessageRole,timestamp: null == timestamp ? _self.timestamp : timestamp // ignore: cast_nullable_to_non_nullable
-as DateTime,
+as DateTime,sources: null == sources ? _self._sources : sources // ignore: cast_nullable_to_non_nullable
+as List<GroundingSource>,
   ));
 }
 

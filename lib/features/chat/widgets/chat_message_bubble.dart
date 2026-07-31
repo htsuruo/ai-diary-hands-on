@@ -1,7 +1,11 @@
+import 'package:ai_diary_hands_on/core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
+import 'package:gap/gap.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../chat_message.dart';
+import '../grounding_source.dart';
 
 class ChatMessageBubble extends StatelessWidget {
   const ChatMessageBubble({
@@ -77,10 +81,49 @@ class _ModelMessageWidget extends StatelessWidget {
         ),
       ),
       padding: const EdgeInsets.all(12),
-      child: MarkdownBody(
-        data: message.text,
-        selectable: true,
+      child: Column(
+        children: [
+          MarkdownBody(
+            data: message.text,
+            selectable: true,
+          ),
+          if (message.sources.isNotEmpty) ...[
+            const Gap(8),
+            _SourceChips(sources: message.sources),
+          ],
+        ],
       ),
+    );
+  }
+}
+
+class _SourceChips extends StatelessWidget {
+  const _SourceChips({required this.sources});
+
+  final List<GroundingSource> sources;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return Wrap(
+      spacing: 8,
+      children: sources.map((source) {
+        return ActionChip(
+          label: Text(source.title.isEmpty ? '参照元リンク' : source.title),
+          avatar: const Icon(Icons.link, size: 16),
+          onPressed: () async {
+            final url = Uri.parse(source.uri);
+            final launched = await launchUrl(url);
+            if (!launched) {
+              logger.warning('Could not launch $url');
+            }
+          },
+          tooltip: source.uri,
+          side: BorderSide(color: theme.colorScheme.outlineVariant),
+          backgroundColor: theme.colorScheme.surface,
+        );
+      }).toList(),
     );
   }
 }
