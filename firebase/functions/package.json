@@ -3,6 +3,7 @@
   "scripts": {
     "genkit:watch": "genkit start -o -- tsx --env-file=.env.local --watch",
     "genkit:start": "npm run genkit:watch -- src/genkit-sample.ts",
+    "genkit:feedback": "npm run genkit:watch -- src/diary-feedback",
     "lint": "eslint --ext .js,.ts .",
     "build": "tsc",
     "build:watch": "tsc --watch",
