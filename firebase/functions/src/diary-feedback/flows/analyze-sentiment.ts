@@ -3,6 +3,8 @@ import { z } from "genkit";
 import { ai } from "../genkit";
 import { sentimentSchema } from "../types";
 
+const analyzeSentimentPrompt = ai.prompt("analyze-sentiment");
+
 const inputSchema = z.object({
   content: z.string().describe("日記の内容"),
 });
@@ -19,15 +21,7 @@ export const analyzeSentimentFlow = ai.defineFlow(
     outputSchema,
   },
   async (input) => {
-    const response = await ai.generate({
-      system: `あなたは優秀な感情分析アシスタントです。与えられた日記の内容に基づいて、その感情がpositive・neutral・negativeのいずれかであると判断してください。`,
-      prompt: `内容:\n${input.content}`,
-      output: {
-        schema: z.object({
-          sentiment: sentimentSchema,
-        }),
-      },
-    });
+    const response = await analyzeSentimentPrompt({ content: input.content });
 
     if (!response.output) {
       throw new Error("AI response has no output");
