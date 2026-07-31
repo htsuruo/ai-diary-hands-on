@@ -1,6 +1,7 @@
 import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:ai_diary_hands_on/core/core.dart';
 import 'package:ai_diary_hands_on/features/ai_feedback/ai_feedback_button.dart';
+import 'package:ai_diary_hands_on/features/ai_feedback_genkit/ai_feedback_genkit_button.dart';
 import 'package:ai_diary_hands_on/features/sentiment_analysis/sentiment_analysis_button.dart';
 import 'package:ai_diary_hands_on/shared/shared.dart';
 import 'package:flutter/material.dart';
@@ -47,6 +48,9 @@ class ActionButtons extends ConsumerWidget {
         ? const SizedBox.shrink()
         : Row(
             children: [
+              // Genkitフィードバックボタン
+              AiFeedbackGenkitButton(diary: diary),
+
               // 感情分析ボタン
               SentimentAnalysisButton(diary: diary),
 
