@@ -23,7 +23,7 @@ class SentimentAnalysis extends _$SentimentAnalysis {
       final model = ref
           .read(firebaseAIProvider)
           .generativeModel(
-            model: 'gemini-3.1-flash-lite',
+            model: 'gemini-3.5-flash-lite',
           );
       final response = await model.generateContent(
         [

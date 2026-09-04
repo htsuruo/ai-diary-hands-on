@@ -6,7 +6,7 @@ import { sentimentSchema } from "./diary-feedback/types";
 
 export const ai = genkit({
   plugins: [googleAI(), skills.plugin()],
-  model: googleAI.model("gemini-3.1-flash-lite"),
+  model: googleAI.model("gemini-3.5-flash-lite"),
   promptDir: "./src/prompts",
 });
 

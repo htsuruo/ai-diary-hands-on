@@ -20,7 +20,7 @@ class CalendarAiAssistant {
     final model = _ref
         .read(firebaseAIProvider)
         .generativeModel(
-          model: 'gemini-3.1-flash-lite',
+          model: 'gemini-3.5-flash-lite',
           tools: [
             Tool.functionDeclarations([_addEventToCalendarTool]),
           ],
