@@ -29,7 +29,7 @@ class Chat extends _$Chat {
     final model = ref
         .watch(firebaseAIProvider)
         .generativeModel(
-          model: 'gemini-3.1-flash-lite',
+          model: 'gemini-3.5-flash-lite',
           systemInstruction: Content.system(
             await GenerativeModelRole.chat.systemInstruction,
           ),

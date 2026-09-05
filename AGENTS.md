@@ -132,13 +132,13 @@ npm run deploy            # Cloud Functions のデプロイ
 
 | 用途 | モデル名 | 主な定義箇所 |
 | --- | --- | --- |
-| クライアント（第4〜7章） | `gemini-3.1-flash-lite` | `lib/tutorial/`、`lib/features/` 各所 |
-| バックエンド共通デフォルト（第9〜11章） | `gemini-3.1-flash-lite` | `functions/src/genkit.ts` |
-| 第9章 フィードバックフロー | `gemini-3.1-flash-lite` | `functions/src/prompts/diary-feedback/*.prompt` |
+| クライアント（第4〜7章） | `gemini-3.5-flash-lite` | `lib/core/ai/generative_model_provider.dart` ほか `lib/` 各所 |
+| バックエンド共通デフォルト（第9〜11章） | `gemini-3.5-flash-lite` | `functions/src/genkit.ts` |
+| 第9章 フィードバックフロー | `gemini-3.5-flash-lite` | `functions/src/diary-feedback/genkit.ts` |
 | 第10章 Embedding | `gemini-embedding-2` | `functions/src/memory-assistant-rag/embedder.ts` |
-| 第10章 RAG フロー | `gemini-3.1-flash-lite` | `functions/src/prompts/memory-assistant-rag/memory-assistant.prompt` |
-| 第11章 ドラフト生成・リフレクション | `gemini-3.5-flash` | `functions/src/prompts/diary-writer-agent/diary_draft.prompt`、`diary_reflect.prompt` |
-| 第11章 メタデータ生成 | `gemini-3.1-flash-lite` | `functions/src/prompts/diary-writer-agent/diary_meta.prompt` |
+| 第10章 RAG フロー | `gemini-3.5-flash-lite` | `functions/src/memory-assistant-rag/prompts/memory-assistant.prompt` |
+| 第11章 ドラフト生成・リフレクション | `gemini-3.5-flash` | `functions/src/diary-writer-agent/genkit.ts`、`prompts/diary_draft.prompt`、`prompts/diary_reflect.prompt` |
+| 第11章 メタデータ生成 | `gemini-3.5-flash-lite` | `functions/src/diary-writer-agent/prompts/diary_meta.prompt` |
 
 モデル名の運用ルール:
 
