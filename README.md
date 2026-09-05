@@ -122,13 +122,13 @@ lib
 ```bash
 features/
 ├── diary/              # 基本日記機能
+├── calendar_integration/ # Googleサインイン基盤、第6章でカレンダー連携を追加
+├── chat/               # 第5章で拡張するチャット画面の雛形
+├── settings/           # Googleサインインの確認画面
 ├── ai_feedback/        # 第5章: AI フィードバック
-├── chat/               # 第5章: AI チャット
 ├── sentiment_analysis/ # 第6章: センチメント分析
-├── calendar_integration/ # 第6章: カレンダー連携
 ├── llm_ops/            # 第7章: LLMOps
-├── ai_feedback_genkit/ # 第9章: Genkit バックエンド連携
-└── settings/           # 設定・デバッグ画面
+└── ai_feedback_genkit/ # 第9章: Genkit バックエンド連携
 ```
 
 バックエンドの実装は `functions/src/` に配置します。第8章ではGenkitの開発環境とサンプルフロー、第9章ではワークフロー、第10章ではRAG、第11章ではAIエージェントを実装します。
