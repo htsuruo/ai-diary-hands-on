@@ -15,9 +15,8 @@ class AiFeedbackGenkitButton extends ConsumerWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     return ActionIconButton(
-      iconData: Icons.fact_check_outlined,
-      color: colorScheme.tertiary,
-      tooltip: '日記を分析してフィードバック',
+      iconData: Icons.auto_awesome,
+      color: colorScheme.primary,
       action: () async {
         await ref
             .read(diaryFeedbackServiceProvider(diary).notifier)

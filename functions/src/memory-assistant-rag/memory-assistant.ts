@@ -1,7 +1,8 @@
-import { ActionContext, UserFacingError, z } from "genkit";
+import { z } from "genkit";
 
-import { ai } from "../genkit";
+import { requireAuth } from "./auth";
 import { diaryRetrieverFlow } from "./diary-retriever";
+import { ai } from "../genkit";
 
 const prompt = ai.prompt("memory-assistant-rag/memory-assistant");
 
@@ -24,17 +25,23 @@ const outputSchema = z.object({
 
 function buildContext(sources: DiarySource[]): string {
   if (sources.length === 0) {
-
     return "関連する日記は見つかりませんでした。";
   }
 
   const contextParts = sources.map((source, index) => {
-
     const date = source.date.slice(0, 10); // ISO 8601 → YYYY-MM-DD
     return `[${index + 1}] ${date}: ${source.content}`;
   });
 
   return contextParts.join("\n\n");
+}
+
+function filterCitedSources(
+  sources: DiarySource[],
+  citedIndices: number[],
+): DiarySource[] {
+  const citedSourceIndices = new Set(citedIndices);
+  return sources.filter((_, index) => citedSourceIndices.has(index + 1));
 }
 
 export const memoryAssistantFlow = ai.defineFlow(
@@ -57,7 +64,6 @@ export const memoryAssistantFlow = ai.defineFlow(
     const additionalContext = buildContext(sources);
 
     const response = await prompt({
-
       query,
       context: additionalContext,
     });
@@ -72,21 +78,3 @@ export const memoryAssistantFlow = ai.defineFlow(
     };
   },
 );
-
-// `buildContext` の定義の後に追加
-function filterCitedSources(
-  sources: DiarySource[],
-  citedIndices: number[],
-): DiarySource[] {
-  const citedSourceIndices = new Set(citedIndices);
-  return sources.filter((_, index) => citedSourceIndices.has(index + 1));
-}
-
-export function requireAuth(context: ActionContext | undefined): string {
-  const auth = context?.auth;
-  if (!auth) {
-
-    throw new UserFacingError("UNAUTHENTICATED", "認証が必要です");
-  }
-  return auth.uid;
-}

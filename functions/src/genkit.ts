@@ -1,6 +1,7 @@
 import { googleAI } from "@genkit-ai/google-genai";
 import { skills } from "@genkit-ai/middleware";
 import { genkit } from "genkit";
+
 import { sentimentSchema } from "./diary-feedback/types";
 
 export const ai = genkit({
@@ -9,5 +10,5 @@ export const ai = genkit({
   promptDir: "./src/prompts",
 });
 
-ai.defineSchema("SentimentSchema", sentimentSchema); // 追加
+ai.defineSchema("SentimentSchema", sentimentSchema);
 ai.defineHelper("eq", (a: string, b: string) => a === b);

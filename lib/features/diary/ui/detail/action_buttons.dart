@@ -48,8 +48,10 @@ class ActionButtons extends ConsumerWidget {
         ? const SizedBox.shrink()
         : Row(
             children: [
+              // Genkitフィードバックボタン
               AiFeedbackGenkitButton(diary: diary),
 
+              // 感情分析ボタン
               SentimentAnalysisButton(diary: diary),
 
               // フィードバック生成ボタン（追記）

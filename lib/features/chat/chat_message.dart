@@ -11,9 +11,7 @@ abstract class ChatMessage with _$ChatMessage {
     required MessageRole role,
     required DateTime timestamp,
     @Default([]) List<GroundingSource> sources,
-    String? searchSuggestionsHtml,
   }) = _ChatMessage;
-
   const ChatMessage._();
 }
 
@@ -22,5 +20,5 @@ enum MessageRole {
   model,
   ;
 
-  bool get isUser => this == .user;
+  bool get isUser => this == MessageRole.user;
 }

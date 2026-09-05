@@ -1,9 +1,9 @@
 import { skills } from "@genkit-ai/middleware";
 import { z } from "genkit";
 
+import { requireAuth } from "../memory-assistant-rag/auth";
 import { ai } from "../genkit";
 // diary_draft.prompt が名前で参照するツールを登録するために読み込む。
-import { requireAuth } from "../memory-assistant-rag/memory-assistant";
 import "./tools/recall_past_diaries";
 
 const SKILL_PATHS = ["./src/diary-writer-agent/skills"];
@@ -33,6 +33,7 @@ export const writeDiaryFlow = ai.defineFlow(
   },
   async ({ memo }, { context, sendChunk }) => {
     const uid = requireAuth(context);
+
     // Step 1: 下書き（ツールループ）
     const draft = await draftPrompt(
       { memo },

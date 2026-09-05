@@ -24,10 +24,8 @@ class ChatPage extends ConsumerWidget {
         return;
       }
       final lastMessage = messages.last;
-
       if (lastMessage.role.isUser) {
         final context = _lastUserMessageKey.currentContext;
-
         if (context != null) {
           Scrollable.ensureVisible(
             context,
@@ -53,7 +51,10 @@ class ChatPage extends ConsumerWidget {
                     ),
                   )
                 : SingleChildScrollView(
-                    padding: const .symmetric(horizontal: 12, vertical: 8),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 8,
+                    ),
                     child: Column(
                       children: [
                         for (final message in messages)
@@ -65,7 +66,7 @@ class ChatPage extends ConsumerWidget {
                           ),
                         if (isSending)
                           const Padding(
-                            padding: .symmetric(vertical: 8),
+                            padding: EdgeInsets.symmetric(vertical: 8),
                             child: CenteredCircularIndicator(),
                           ),
                       ],

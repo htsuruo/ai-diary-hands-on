@@ -51,15 +51,16 @@ class FeedbackResultWidget extends ConsumerWidget {
           const Gap(12),
           Row(
             children: [
-              if (output.isComplete) ...[
-                Icon(sentiment.icon, color: sentiment.color),
+              Icon(sentiment.icon, color: sentiment.color),
+              const Gap(8),
+              Text(sentiment.label),
+              if (!output.isComplete) ...[
                 const Gap(8),
-                Text(sentiment.label),
-              ] else
                 const SizedBox.square(
                   dimension: 16,
                   child: CircularProgressIndicator(strokeWidth: 2),
                 ),
+              ],
             ],
           ),
           const Gap(8),

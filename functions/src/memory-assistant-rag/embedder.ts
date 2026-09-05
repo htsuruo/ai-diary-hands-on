@@ -5,18 +5,10 @@ const embeddingModel = "gemini-embedding-2";
 
 // ドキュメントインデックス用Embedder
 export const documentEmbedder = googleAI.embedder(embeddingModel, {
-
-  outputDimensionality,
-});
-
-// 10.5で使用する検索クエリ用Embedder
-export const queryEmbedder = googleAI.embedder(embeddingModel, {
-
   outputDimensionality,
 });
 
 export function formatDocumentForEmbedding({
-
   title,
   content,
 }: {
@@ -26,7 +18,11 @@ export function formatDocumentForEmbedding({
   return `title: ${title} | text: ${content}`;
 }
 
-export function formatQueryForEmbedding(query: string): string {
+// 検索クエリ用Embedder
+export const queryEmbedder = googleAI.embedder(embeddingModel, {
+  outputDimensionality,
+});
 
+export function formatQueryForEmbedding(query: string): string {
   return `task: search result | query: ${query}`;
 }

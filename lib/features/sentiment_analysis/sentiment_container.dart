@@ -58,15 +58,15 @@ class _SentimentResultBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const .symmetric(vertical: 8),
+      padding: const EdgeInsets.symmetric(vertical: 8),
       child: DecoratedBox(
         decoration: BoxDecoration(
           color: backgroundColor,
           border: border,
-          borderRadius: .circular(8),
+          borderRadius: BorderRadius.circular(8),
         ),
         child: Padding(
-          padding: const .symmetric(
+          padding: const EdgeInsets.symmetric(
             horizontal: 12,
             vertical: 8,
           ),
@@ -88,7 +88,7 @@ class _SentimentResult extends StatelessWidget {
     final sentiment = state.sentiment;
 
     return Row(
-      crossAxisAlignment: .start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Icon(
           sentiment.icon,
@@ -97,12 +97,12 @@ class _SentimentResult extends StatelessWidget {
         const Gap(8),
         Expanded(
           child: Column(
-            crossAxisAlignment: .start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                state.sentiment.label,
+                sentiment.label,
                 style: theme.textTheme.bodyMedium!.copyWith(
-                  fontWeight: .w700,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
               const Gap(4),

@@ -29,5 +29,15 @@ module.exports = {
     "quotes": ["error", "double"],
     "import/no-unresolved": 0,
     "indent": ["error", 2],
+    // 本書のリスティングのコードスタイルに合わせた調整
+    "object-curly-spacing": ["error", "always"],
+    "require-jsdoc": 0,
+    "max-len": ["error", {
+      "code": 100,
+      "ignoreComments": true,
+      "ignoreUrls": true,
+      "ignoreStrings": true,
+      "ignoreTemplateLiterals": true,
+    }],
   },
 };

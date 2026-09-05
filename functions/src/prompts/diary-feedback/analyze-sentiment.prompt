@@ -4,7 +4,6 @@ input:
     content: string
 output:
   schema:
-    # sentiment(enum: ["positive", "neutral", "negative"])
     sentiment: SentimentSchema
 ---
 {{role "system"}}

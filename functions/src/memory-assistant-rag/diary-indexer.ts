@@ -1,9 +1,10 @@
 import { FieldValue } from "firebase-admin/firestore";
 import { z } from "genkit";
 import { Document } from "genkit/retriever";
+
 import { db } from "../firebase";
-import { ai } from "../genkit";
 import { documentEmbedder, formatDocumentForEmbedding } from "./embedder";
+import { ai } from "../genkit";
 import { loadSampleDiaries } from "./sample-diaries";
 
 type IndexerMetadata = {
@@ -12,18 +13,19 @@ type IndexerMetadata = {
 };
 
 export const diaryIndexer = ai.defineIndexer(
-
   {
     name: "diaryIndexer",
     configSchema: z.object({
-
       uid: z.string().describe("ユーザーID"),
     }),
   },
   async (docs, options) => {
     const batch = db.batch();
     const uid = options?.uid;
-    const collectionRef = db.collection("users").doc(uid).collection("diaries");
+    const collectionRef = db
+      .collection("users")
+      .doc(uid)
+      .collection("diaries");
 
     for (const doc of docs) {
       const docRef = collectionRef.doc();
@@ -38,7 +40,6 @@ export const diaryIndexer = ai.defineIndexer(
       });
 
       batch.set(docRef, {
-
         title: meta.title,
         content: doc.text,
         feedback: null,
@@ -49,6 +50,7 @@ export const diaryIndexer = ai.defineIndexer(
         updatedAt: FieldValue.serverTimestamp(),
       });
     }
+
     await batch.commit();
   },
 );
@@ -63,7 +65,6 @@ const inputSchema = z.object({
 
 const outputSchema = z.object({ count: z.number() });
 
-// `inputSchema` と `outputSchema` の定義の後に追加
 export const diaryIndexerFlow = ai.defineFlow(
   {
     name: "diaryIndexerFlow",
@@ -81,14 +82,12 @@ export const diaryIndexerFlow = ai.defineFlow(
     const sampleDiaries = loadSampleDiaries();
     const documents = sampleDiaries.map((diary) =>
       Document.fromText(diary.content, {
-
         title: diary.title,
         date: diary.date,
       }),
     );
 
     await ai.index({
-
       indexer: diaryIndexer,
       documents,
       options: { uid },

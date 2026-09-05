@@ -35,7 +35,7 @@ final class GoogleUserProvider
   GoogleUser create() => GoogleUser();
 }
 
-String _$googleUserHash() => r'6ced277553d909f23a309886afe24aee601d2688';
+String _$googleUserHash() => r'b0fb159c28b64b8308d0c3cf5868d416f3b00872';
 
 abstract class _$GoogleUser extends $AsyncNotifier<GoogleSignInAccount?> {
   FutureOr<GoogleSignInAccount?> build();

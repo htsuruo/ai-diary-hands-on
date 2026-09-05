@@ -37,6 +37,7 @@ const opts = { secrets: [geminiApiKey] };
 export const diaryFeedback = onCallGenkit(opts, diaryFeedbackFlow);
 export const memoryAssistant = onCallGenkit(opts, memoryAssistantFlow);
 export const writeDiary = onCallGenkit(opts, writeDiaryFlow);
+
 export const helloWorld = onRequest((request, response) => {
   logger.info("Hello logs!", { structuredData: true });
   response.send("Hello from Firebase!");

@@ -35,6 +35,7 @@ class GoogleUser extends _$GoogleUser {
   Future<GoogleSignInAccount?> build() async {
     _ensureSupportedPlatform();
     try {
+      await GoogleSignIn.instance.initialize();
       // 既存のサインイン状態を軽量にチェック
       return GoogleSignIn.instance.attemptLightweightAuthentication();
     } on GoogleSignInException catch (e) {

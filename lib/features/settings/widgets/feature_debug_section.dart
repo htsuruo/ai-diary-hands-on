@@ -6,10 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'debug_list_tile.dart';
 import 'debug_section.dart';
 
-/// 機能実装のデバッグ用セクション
-///
-/// 開発中のロジック→UIの実装フローにおいて、
-/// ロジックの挙動をこまめに確認するためのデバッグ機能を提供する。
+/// 各章で実装する機能の動作確認に使用するセクションです。
 class FeatureDebugSection extends ConsumerWidget {
   const FeatureDebugSection({super.key});
 
@@ -23,7 +20,8 @@ class FeatureDebugSection extends ConsumerWidget {
           title: 'カレンダー予定追加',
           onTap: () async {
             // A. 関数呼び出しが機能し、予定が追加される想定のテキスト例
-            const content = '明日の14時から、駅前のカフェで友人と会う約束をした。久しぶりに会えるので楽しみ。';
+            const content =
+                '明日の14時から、駅前のカフェで友人と会う約束をした。久しぶりに会えるので楽しみ。';
 
             // B. 関数呼び出しが発生しない想定のテキスト例
             // const content = '今日のプレゼンはうまくいった。とても嬉しい一日だった。';

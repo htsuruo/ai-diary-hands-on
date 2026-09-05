@@ -7,9 +7,9 @@ typings/
 
 # Node.js dependency directory
 node_modules/
-build/
 *.local
+# ローカル環境変数（APIキーを含むためコミット禁止）
+.env*
 
+# Genkit のローカルトレース・ランタイムデータ
 .genkit/
-
-.env.*
