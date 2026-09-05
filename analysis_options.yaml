@@ -11,6 +11,8 @@ analyzer:
     - lib/**/*.g.dart
     - lib/**/*.freezed.dart
     - lib/firebase_options.dart
+    - android/**
+    - ios/**
 linter:
   rules:
     use_build_context_synchronously: false
