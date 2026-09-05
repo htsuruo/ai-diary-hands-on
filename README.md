@@ -6,7 +6,7 @@ AI日記アプリのハンズオンプロジェクト
 
 ## ハンズオンの開始方法
 
-[chapter-04-start](https://github.com/htsuruo/ai-diary-hands-on/tree/chapter-04-start) タグからリポジトリをクローンし、作業用ブランチを作成します。
+[chapter-04-start](https://github.com/htsuruo/ai-diary-hands-on/tree/chapter-04-start) ブランチからリポジトリをクローンし、作業用ブランチを作成します。
 
 ```bash
 git clone --branch chapter-04-start \
@@ -32,6 +32,15 @@ flutterfire configure
 `flutterfire configure` を実行すると、`lib/firebase_options.dart` が生成されます。
 
 **注意**: `firebase_options.dart` は `.gitignore` 対象のためリポジトリには含まれていません。各自の Firebase プロジェクトで `flutterfire configure` を実行して生成してください。
+
+### Cloud FunctionsとGenkit
+
+第8章以降で使用するCloud Functionsの依存関係は、プロジェクトルートでFirebaseを設定したあと、次のコマンドでインストールします。
+
+```bash
+cd functions
+npm install
+```
 
 #### iOSビルド時の注意点: `xcodeproj` gem
 
@@ -67,22 +76,29 @@ CocoaPods（`pod`コマンド）のインストールは不要です。
 
 ## プロジェクト構成
 
-本アプリは機能（feature-first）ごとにディレクトリを分けて構成しています。ハンズオンでは、章を進めながら `lib/features/` の下へAI機能を追加します。
+本アプリは機能（feature-first）ごとにディレクトリを分けて構成しています。ハンズオンでは、章を進めながら `lib/features/` と `functions/src/` の下へAI機能を追加します。
 
 ```bash
 lib
 ├── app.dart
 ├── core
+│   ├── ai
 │   ├── core.dart
 │   ├── router
 │   ├── theme
 │   └── utils
+├── examples
 ├── features
+│   ├── ai_feedback
+│   ├── ai_feedback_genkit
 │   ├── calendar_integration
 │   ├── chat
 │   ├── diary
+│   ├── llm_ops
+│   ├── sentiment_analysis
 │   └── settings
 ├── main.dart
+├── tutorial
 └── shared
     ├── extensions
     ├── shared.dart
@@ -106,16 +122,29 @@ lib
 ```bash
 features/
 ├── diary/              # 基本日記機能
-├── calendar_integration/ # Googleサインイン基盤、第6章でカレンダー連携を追加
-├── chat/               # 第5章で拡張するチャット画面の雛形
-├── settings/           # Googleサインインの確認画面
 ├── ai_feedback/        # 第5章: AI フィードバック
 ├── chat/               # 第5章: AI チャット
 ├── sentiment_analysis/ # 第6章: センチメント分析
 ├── calendar_integration/ # 第6章: カレンダー連携
 ├── llm_ops/            # 第7章: LLMOps
-└── ai_feedback_genkit/ # 第9章: Genkit バックエンド連携
+├── ai_feedback_genkit/ # 第9章: Genkit バックエンド連携
+└── settings/           # 設定・デバッグ画面
 ```
+
+バックエンドの実装は `functions/src/` に配置します。第8章ではGenkitの開発環境とサンプルフロー、第9章ではワークフロー、第10章ではRAG、第11章ではAIエージェントを実装します。
+
+### 章と主な実装箇所
+
+| 章 | 主な実装箇所 | 内容 |
+| --- | --- | --- |
+| 第4章 | `lib/tutorial/`、`lib/firebase_options.dart` | Firebase環境、Firebase AI Logic、テキスト生成 |
+| 第5章 | `lib/features/ai_feedback/`、`lib/features/chat/`、`lib/core/ai/` | AIフィードバック、ストリーミング、マルチターンチャット |
+| 第6章 | `lib/features/sentiment_analysis/`、`lib/features/calendar_integration/`、`lib/features/chat/` | 構造化出力、関数呼び出し、グラウンディング |
+| 第7章 | `lib/features/llm_ops/` | AIモニタリング、プロンプトテンプレート、Remote Config、App Check |
+| 第8章 | `functions/src/genkit-sample.ts` | GenkitとCloud Functionsの開発環境 |
+| 第9章 | `functions/src/diary-feedback/`、`lib/features/ai_feedback_genkit/` | Genkitワークフロー、Dotprompt、Callable関数 |
+| 第10章 | `functions/src/memory-assistant-rag/` | Embedding、Firestoreベクトル検索、RAG |
+| 第11章 | `functions/src/diary-writer-agent/` | ライティングエージェント、RAGツール、Skills、reflection |
 
 #### Core vs Shared の使い分け
 

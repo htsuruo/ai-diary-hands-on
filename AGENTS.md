@@ -6,8 +6,8 @@
 
 書籍「作って学ぶ生成AIモバイルアプリ開発／運用ーFirebase AI LogicとGenkitでFlutterアプリにGeminiを実装する」のハンズオンで使用する AI 日記アプリのサンプルコードです。
 
-- 書籍の第4章〜第7章（Flutter + Firebase AI Logic）と第9章〜第11章（Genkit バックエンド）に対応します
-- 書籍リポジトリ（`gihyo-contents`）から Git submodule として参照され、本文とコードの対応関係をコミット単位で固定します
+- 書籍の第4章〜第7章（Flutter + Firebase AI Logic）と第8章〜第11章（Genkit バックエンド）に対応します
+- 書籍リポジトリ（`gihyo-genaimobileapp`）の本文にコードが転載され、本文とコードの対応関係を保ちます
 - 読者が手を動かして進める教材であるため、**本文の手順どおりに再現できること**を最優先とします
 
 ## 技術スタック
@@ -44,6 +44,7 @@ lib/
 assets/prompts/    # システムプロンプトの Markdown ファイル
 functions/         # Cloud Functions（Genkit バックエンド）
   src/
+    genkit-sample.ts        # 第8章: Genkitサンプルフロー
     genkit.ts             # 共有の Genkit インスタンス
     firebase.ts           # Firebase Admin SDK / Firestore の初期化
     diary-feedback/       # 第9章: センチメント分析 + フィードバック生成フロー
@@ -62,11 +63,10 @@ specs/             # 画面・要件などの仕様ドキュメント
 | 第5章 | `lib/features/ai_feedback/`、`lib/features/chat/`、`lib/core/ai/`、`assets/prompts/` | AI フィードバック、ストリーミング、マルチターンチャット |
 | 第6章 | `lib/features/sentiment_analysis/`、`lib/features/calendar_integration/`、`lib/features/chat/` | 構造化出力、関数呼び出し、グラウンディング |
 | 第7章 | `lib/features/llm_ops/` | サーバープロンプトテンプレート、Remote Config、App Check |
+| 第8章 | `functions/src/genkit-sample.ts`、`functions/` | Genkitの基礎、Cloud Functions開発環境、Developer UI |
 | 第9章 | `functions/src/diary-feedback/`、`lib/features/ai_feedback_genkit/` | Genkit フロー、Dotprompt、Cloud Functions デプロイ |
 | 第10章 | `functions/src/memory-assistant-rag/` | Embedding、Firestore ベクトル検索、RAG フロー |
 | 第11章 | `functions/src/diary-writer-agent/` | エージェントループ、RAG ツール、Skills、reflection |
-
-第8章は別リポジトリ（`genkit-youtube-summary`）を使用するため、本リポジトリに対応コードはありません。
 
 ## セットアップ
 
@@ -119,12 +119,12 @@ npm run deploy            # Cloud Functions のデプロイ
 
 ## 書籍本文との同期ルール
 
-このリポジトリのコードは書籍本文（`gihyo-contents` リポジトリの `contents/`）に転載されています。**コードと本文の乖離は読者の再現失敗に直結する**ため、次のルールを守ります。
+このリポジトリのコードは書籍本文（`gihyo-genaimobileapp` リポジトリの `contents/`）に転載されています。**コードと本文の乖離は読者の再現失敗に直結する**ため、次のルールを守ります。
 
 1. 本文に掲載されているコード・ファイルパス・コマンドを変更する場合は、書籍リポジトリ側の該当章も必ず更新する
 2. モデル名（例: Gemini のバージョン）や依存パッケージを更新する場合は、本文の記載と一致させる
 3. 変更が特定の章の完成状態に影響する場合は、後述のタグを更新する
-4. 書籍リポジトリ側で submodule の参照コミットを更新する
+4. 書籍リポジトリ側の転載コードも更新する
 
 ## 使用モデルの一覧と運用
 
@@ -132,13 +132,16 @@ npm run deploy            # Cloud Functions のデプロイ
 
 | 用途 | モデル名 | 主な定義箇所 |
 | --- | --- | --- |
-| クライアント（第4〜7章） | `gemini-3.5-flash-lite` | `lib/core/ai/generative_model_provider.dart` ほか `lib/` 各所 |
+| クライアント（第4〜7章） | `gemini-3.5-flash-lite` | `lib/core/ai/firebase_ai_provider.dart`、`lib/tutorial/`、`lib/features/` 各所 |
 | バックエンド共通デフォルト（第9〜11章） | `gemini-3.5-flash-lite` | `functions/src/genkit.ts` |
+| 第8章初期生成サンプル | `gemini-2.5-flash` | `functions/src/genkit-sample.ts` |
 | 第9章 フィードバックフロー | `gemini-3.5-flash-lite` | `functions/src/diary-feedback/genkit.ts` |
 | 第10章 Embedding | `gemini-embedding-2` | `functions/src/memory-assistant-rag/embedder.ts` |
 | 第10章 RAG フロー | `gemini-3.5-flash-lite` | `functions/src/memory-assistant-rag/prompts/memory-assistant.prompt` |
 | 第11章 ドラフト生成・リフレクション | `gemini-3.5-flash` | `functions/src/diary-writer-agent/genkit.ts`、`prompts/diary_draft.prompt`、`prompts/diary_reflect.prompt` |
 | 第11章 メタデータ生成 | `gemini-3.5-flash-lite` | `functions/src/diary-writer-agent/prompts/diary_meta.prompt` |
+
+第8章の`genkit-sample.ts`は、`firebase init`直後の状態を比較元として保持しています。本文では、このサンプルを`gemini-3.5-flash-lite`へ変更し、Gemini 3.xで使えない`temperature`を削除します。
 
 モデル名の運用ルール:
 
@@ -157,10 +160,10 @@ npm run deploy            # Cloud Functions のデプロイ
 
 運用ルール:
 
-- タグの対象は第4章〜第7章、第9章〜第11章です
+- タグの対象は第4章〜第11章です
 - `chapter-XX-complete` と次章の `chapter-(XX+1)-start` は原則同じコミットを指します（第7章 → 第9章のように章が飛ぶ場合も同様）
 - **タグが指すツリーには、その章より後の章で実装する機能を含めてはいけません**（例: `chapter-05-complete` に第6章のセンチメント分析が入っていてはいけない）
-- 章の内容に影響する修正を行った場合は、該当章以降のタグを付け直し、書籍リポジトリの submodule 参照も更新します
+- 章の内容に影響する修正を行った場合は、該当章以降のタグを付け直し、書籍リポジトリ側の転載コードも更新します
 
 ## 注意事項
 

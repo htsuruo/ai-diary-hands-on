@@ -13,7 +13,7 @@ Future<void> main() async {
   );
 
   final model = FirebaseAI.googleAI().generativeModel(
-    model: 'gemini-3.1-flash-lite',
+    model: 'gemini-3.5-flash-lite',
   );
 
   try {
