@@ -6,10 +6,10 @@ AI日記アプリのハンズオンプロジェクト
 
 ## ハンズオンの開始方法
 
-[chapter-04-start](https://github.com/htsuruo/ai-diary-hands-on/tree/chapter-04-start) ブランチからリポジトリをクローンし、作業用ブランチを作成します。
+[chapter-04-start-old](https://github.com/htsuruo/ai-diary-hands-on/tree/chapter-04-start-old) タグからリポジトリをクローンし、作業用ブランチを作成します。
 
 ```bash
-git clone --branch chapter-04-start \
+git clone --branch chapter-04-start-old \
   https://github.com/htsuruo/ai-diary-hands-on.git
 cd ai-diary-hands-on
 git switch -c ai-diary-work
