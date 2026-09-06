@@ -27,7 +27,7 @@ class DiaryRepository extends _$DiaryRepository {
   @override
   Stream<List<DiaryEntry>> build() {
     return _collectionRef
-        .orderBy('date', descending: true)
+        .orderBy('createdAt', descending: true)
         .snapshots()
         .map(
           (snapshot) => snapshot.docs
