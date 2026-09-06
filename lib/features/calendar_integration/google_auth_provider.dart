@@ -37,7 +37,7 @@ class GoogleUser extends _$GoogleUser {
     try {
       await GoogleSignIn.instance.initialize();
       // 既存のサインイン状態を軽量にチェック
-      return GoogleSignIn.instance.attemptLightweightAuthentication();
+      return await GoogleSignIn.instance.attemptLightweightAuthentication();
     } on GoogleSignInException catch (e) {
       return _handleGoogleSignInException(e);
     }
