@@ -4,7 +4,7 @@
 Flutter 製 AI日記アプリです。Firebase AI Logic を使うクライアント実装から、
 Genkit と Cloud Functions によるバックエンドまでを章ごとに段階的に作ります。
 
-![AI Diary のロゴ](./assets/images/logo/symbol_with_box.png)
+<img src="./assets/images/logo/symbol_with_box.png" alt="AI Diary のロゴ" width="70%">
 
 ## ハンズオンの開始方法
 
