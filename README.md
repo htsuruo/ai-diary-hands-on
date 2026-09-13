@@ -1,6 +1,6 @@
 # AI Diary Hands-on
 
-書籍[作って学ぶ生成AIモバイルアプリ開発／運用](https://www.amazon.co.jp/dp/4297158795)のための、
+書籍[「作って学ぶ生成AIモバイルアプリ開発／運用 ― Firebase AI LogicとGenkitでFlutterアプリにGeminiを実装する」](https://www.amazon.co.jp/dp/4297158795)のための、
 Flutter 製 AI日記アプリです。Firebase AI Logic を使うクライアント実装から、
 Genkit と Cloud Functions によるバックエンドまでを章ごとに段階的に作ります。
 
