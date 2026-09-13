@@ -9,7 +9,7 @@ Genkit と Cloud Functions によるバックエンドまでを章ごとに段�
 ## ハンズオンの開始方法
 
 第4章から手を動かす場合は、
-[chapter-04-start](https://github.com/htsuruo/ai-diary-hands-on/tree/chapter-04-start)
+[chapter-04-start](https://github.com/htsuruo/ai-diary-hands-on/tree/chapter-04-start) タグ
 から始めます。後続の機能を含む `main` を出発点にすると、本文の途中で作るコードが
 あらかじめ存在してしまうためです。クローン後は、変更を保存するための作業ブランチを
 作成してください。
@@ -21,8 +21,9 @@ cd ai-diary-hands-on
 git switch -c ai-diary-work
 ```
 
-`--branch` でタグを指定した場合、Git は detached HEAD（ブランチに属さない状態）に
-なります。最後の `git switch -c` は、この状態から作業ブランチを作るコマンドです。
+`--branch chapter-04-start` で、第4章の開始タグを指定してクローンします。タグを
+指定しないと、既定のブランチにある完成後のコードが取得されます。クローン後は、
+`git switch -c` でハンズオンの変更を保存する作業ブランチを作成します。
 
 章の開始・完了時点は、`chapter-XX-start` と `chapter-XX-complete` のタグで管理します。
 途中の章から始めるときは、対応する `chapter-XX-start` を指定してクローンします。
