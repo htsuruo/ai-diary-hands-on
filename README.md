@@ -1,12 +1,18 @@
-# ai_diary_hands_on
+# AI Diary Hands-on
 
-AI日記アプリのハンズオンプロジェクト
+書籍[作って学ぶ生成AIモバイルアプリ開発／運用](https://www.amazon.co.jp/dp/4297158795)のための、
+Flutter 製 AI日記アプリです。Firebase AI Logic を使うクライアント実装から、
+Genkit と Cloud Functions によるバックエンドまでを章ごとに段階的に作ります。
 
-<img src="./assets/images/logo/symbol_with_box.png" alt="Symbol Icon" width="70%">
+![AI Diary のロゴ](./assets/images/logo/symbol_with_box.png)
 
 ## ハンズオンの開始方法
 
-[chapter-04-start](https://github.com/htsuruo/ai-diary-hands-on/tree/chapter-04-start) ブランチからリポジトリをクローンし、作業用ブランチを作成します。
+第4章から手を動かす場合は、
+[chapter-04-start](https://github.com/htsuruo/ai-diary-hands-on/tree/chapter-04-start)
+から始めます。後続の機能を含む `main` を出発点にすると、本文の途中で作るコードが
+あらかじめ存在してしまうためです。クローン後は、変更を保存するための作業ブランチを
+作成してください。
 
 ```bash
 git clone --branch chapter-04-start \
@@ -15,7 +21,32 @@ cd ai-diary-hands-on
 git switch -c ai-diary-work
 ```
 
+`--branch` でタグを指定した場合、Git は detached HEAD（ブランチに属さない状態）に
+なります。最後の `git switch -c` は、この状態から作業ブランチを作るコマンドです。
+
+章の開始・完了時点は、`chapter-XX-start` と `chapter-XX-complete` のタグで管理します。
+途中の章から始めるときは、対応する `chapter-XX-start` を指定してクローンします。
+
 ## セットアップ
+
+### 必要な環境
+
+| 用途 | 必要なもの |
+| --- | --- |
+| Flutter アプリ | Flutter SDK、Dart SDK（`pubspec.yaml` の Dart SDK 制約は `^3.12.0`） |
+| Firebase 設定 | Firebase CLI、FlutterFire CLI、Firebase プロジェクト |
+| 第8章以降 | Node.js 24、npm、Firebase プロジェクト |
+| iOS | Xcode と RubyGems（FlutterFire の設定時に必要になる場合があります） |
+
+最初に `flutter doctor` を実行し、開発環境に不足がないことを確認してください。
+
+### Flutterの依存関係
+
+Firebase を設定する前に、プロジェクトの依存関係を取得します。
+
+```bash
+flutter pub get
+```
 
 ### Firebase設定
 
@@ -31,11 +62,25 @@ flutterfire configure
 
 `flutterfire configure` を実行すると、`lib/firebase_options.dart` が生成されます。
 
-**注意**: `firebase_options.dart` は `.gitignore` 対象のためリポジトリには含まれていません。各自の Firebase プロジェクトで `flutterfire configure` を実行して生成してください。
+**注意**: `firebase_options.dart` は `.gitignore` 対象のためリポジトリには
+含まれていません。各自の Firebase プロジェクトで `flutterfire configure` を実行して
+生成してください。API キー、サービスアカウント鍵、実プロジェクトの設定値も
+コミットしません。
+
+### アプリの起動
+
+接続するデバイスまたはエミュレータを確認してから起動します。
+
+```bash
+flutter devices
+flutter run
+```
 
 ### Cloud FunctionsとGenkit
 
-第8章以降で使用するCloud Functionsの依存関係は、プロジェクトルートでFirebaseを設定したあと、次のコマンドでインストールします。
+第8章以降で使用する Cloud Functions の依存関係は、プロジェクトルートで Firebase を
+設定したあと、次のコマンドでインストールします。Functions の実行環境は Node.js 24
+です。
 
 ```bash
 cd functions
@@ -65,6 +110,39 @@ CocoaPods（`pod`コマンド）のインストールは不要です。
 
 参考: [Swift Package Manager for app developers | Flutter](http://docs.flutter.dev/packages-and-plugins/swift-package-manager/for-app-developers)
 
+## よく使うコマンド
+
+### Flutter
+
+```bash
+# 静的解析
+flutter analyze
+
+# Riverpod / Freezed などのコード生成を監視
+dart run build_runner watch --delete-conflicting-outputs
+```
+
+### FunctionsとGenkit
+
+以下は `functions/` ディレクトリで実行します。
+
+```bash
+# 静的解析と TypeScript ビルド
+npm run lint
+npm run build
+
+# 章ごとの Genkit Developer UI
+npm run genkit:feedback
+npm run genkit:rag
+npm run genkit:writer
+
+# Functions Emulator と Genkit を併用
+npm run genkit:emulators
+
+# Cloud Functions をデプロイ
+npm run deploy
+```
+
 ## 技術構成
 
 - Framework: Flutter (stable channel, 3.44.4) + Dart (SDK ^3.12.0)
@@ -72,7 +150,8 @@ CocoaPods（`pod`コマンド）のインストールは不要です。
 - Code generation: Freezed、JSON Serializable、Build Runner
 - Development tools: Simple Logger、Custom Lint、Pedantic Mono、Riverpod Lint
 - Support Platform: Android、iOS
-- Database: Cloud Firestore(Firebase)
+- Database: Cloud Firestore (Firebase)
+- Backend AI: Genkit + Google GenAI（第8章以降）
 
 ## プロジェクト構成
 
@@ -152,17 +231,17 @@ features/
 
 | ディレクトリ | コンセプト | 特徴 | 具体例 |
 | :--- | :--- | :--- | :--- |
-| **`core`** | **インフラ & カーネル** | ・アプリが動くための**土台**<br>・ビジネスロジックを含まない、または**全機能の根幹**となるデータ<br>・他のアプリでも使い回せるような汎用的なものが多い | `Logger`, `ApiClient`, `AppTheme`, `Router`, `ScaffoldMessenger`<br>`DiaryEntry` (例外的にここ: アプリの核となるデータ) |
-| **`shared`** | **共有部品 (UI/Logic)** | ・複数の機能から**再利用**される部品<br>・このアプリ固有のデザインや要件が含まれる<br>・「機能の一部」だが、共通化されたもの | `PrimaryButton`, `ErrorView`, `DateFormatters`<br>`DiaryCard` (一覧と検索の両方で使う場合など) |
+| **`core`** | **アプリの基盤** | ・アプリ全体で使う技術的な土台<br>・特定の機能（ドメイン）に依存しない<br>・起動や全画面の動作に関わる | `logger` (`core/utils/logger.dart`)、`AppTheme`、`router`、Firebase AI の共通 Provider |
+| **`shared`** | **共有部品 (UI/Logic)** | ・複数の機能から再利用される部品<br>・このアプリ固有のデザインや要件を含む<br>・機能の一部を共通化したもの | `ActionIconButton`、`EmptyWidget`、`DateTime` 拡張 |
 
 **判断の目安:**
 - **「これがないとアプリが起動すらしないか？」**
-    - YES → `core` (Router, Theme, Authなど)
+    - YES → `core` (Router, Themeなど)
     - NO → `shared` (特定のボタン、特定のフォーマッターなど)
 
 - **「他の全く違うアプリを作る時、このファイルをコピーして使えるか？」**
-    - YES (修正なしで使える) → `core` の可能性が高い (Logger, API Client)
-    - NO (デザインが違うから無理) → `shared` の可能性が高い (UI Components)
+    - YES (修正なしで使える) → `core` の可能性が高い (Logger, Router)
+    - NO (デザインが違うから無理) → `shared` の可能性が高い (共通 Widget)
 
 ### データフロー
 
